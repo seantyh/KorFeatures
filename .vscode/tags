@@ -1,0 +1,104 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+BASEPATH	../KorFeatures\frequency_data.py	/^BASEPATH = os.path.dirname(__file__)$/;"	kind:variable	line:7
+CONN_POS_LIST	../KorFeatures\doc_feat.py	/^CONN_POS_LIST = PosClass().get_connective_class()$/;"	kind:variable	line:14
+CONT_POS_LIST	../KorFeatures\doc_feat.py	/^CONT_POS_LIST = PosClass().get_content_class()$/;"	kind:variable	line:13
+CharFreq	../KorFeatures\frequency_data.py	/^class CharFreq:$/;"	kind:class	line:8
+CharFreqData	../KorFeatures\doc_feat.py	/^CharFreqData = FrequencyData.CharFreq()$/;"	kind:variable	line:16
+DepRelation	../KorFeatures\dep_relation.py	/^class DepRelation:$/;"	kind:class	line:1
+DocFeat	../KorFeatures\doc_feat.py	/^class DocFeat:$/;"	kind:class	line:23
+EmbeddingOverlap	../KorFeatures\overlap_algo.py	/^class EmbeddingOverlap:$/;"	kind:class	line:15
+FUNC_POS_LIST	../KorFeatures\doc_feat.py	/^FUNC_POS_LIST = PosClass().get_functional_class()$/;"	kind:variable	line:12
+FrequencyData	../KorFeatures\doc_feat.py	/^import FrequencyData$/;"	kind:namespace	line:5
+KorFeatures	../KorFeatures\__init__.py	/^from .kor_features import KorFeatures$/;"	kind:namespace	line:1
+KorFeatures	../KorFeatures\kor_features.py	/^class KorFeatures:$/;"	kind:class	line:3
+KorFeatures	../KorFeatures\tests\test_features.py	/^import KorFeatures$/;"	kind:namespace	line:3
+List	../KorFeatures\kor_features.py	/^from typing import Text, List$/;"	kind:namespace	line:1
+OrderedDict	../KorFeatures\feature_template.py	/^from collections import OrderedDict$/;"	kind:namespace	line:1
+PosClass	../KorFeatures\doc_feat.py	/^from pos_class import PosClass$/;"	kind:namespace	line:6
+PosClass	../KorFeatures\pos_class.py	/^class PosClass:$/;"	kind:class	line:2
+Series	../KorFeatures\doc_feat.py	/^from pandas import Series$/;"	kind:namespace	line:1
+TestCase	../KorFeatures\tests\test_features.py	/^from unittest import TestCase$/;"	kind:namespace	line:1
+TestFeatures	../KorFeatures\tests\test_features.py	/^class TestFeatures(TestCase):$/;"	kind:class	line:5
+Text	../KorFeatures\kor_features.py	/^from typing import Text, List$/;"	kind:namespace	line:1
+TokenOverlap	../KorFeatures\overlap_algo.py	/^class TokenOverlap:$/;"	kind:class	line:5
+TopicQuery	../KorFeatures\doc_feat.py	/^from query_topic import TopicQuery$/;"	kind:namespace	line:9
+WordFreq	../KorFeatures\frequency_data.py	/^class WordFreq:$/;"	kind:class	line:25
+WordFreqData	../KorFeatures\doc_feat.py	/^WordFreqData = FrequencyData.WordFreq()  $/;"	kind:variable	line:17
+__init__	../KorFeatures\dep_relation.py	/^    def __init__(self, rel, g, d):$/;"	kind:member	line:2
+__init__	../KorFeatures\doc_feat.py	/^    def __init__(self, dio_name, tokens, sentences, tree, deps):$/;"	kind:member	line:24
+__init__	../KorFeatures\frequency_data.py	/^    def __init__(self):$/;"	kind:member	line:26
+__init__	../KorFeatures\frequency_data.py	/^    def __init__(self):$/;"	kind:member	line:9
+__init__	../KorFeatures\kor_features.py	/^    def __init__(self, dio_name: ext, tokens, sentences, tree, deps):$/;"	kind:member	line:4
+__init__	../KorFeatures\overlap_algo.py	/^    def __init__(self):$/;"	kind:member	line:16
+__init__	../KorFeatures\overlap_algo.py	/^    def __init__(self):$/;"	kind:member	line:6
+__init__	../KorFeatures\pos_class.py	/^    def __init__(self):$/;"	kind:member	line:3
+__init__.py	../KorFeatures\__init__.py	1;"	kind:file	line:1
+__init__.py	../KorFeatures\tests\__init__.py	1;"	kind:file	line:1
+__repr__	../KorFeatures\dep_relation.py	/^    def __repr__(self):$/;"	kind:member	line:7
+author	../setup.py	/^      author='Sean Tseng',$/;"	kind:variable	line:7
+author_email	../setup.py	/^      author_email='seantyh@gmail.com',$/;"	kind:variable	line:8
+computeCohesive	../KorFeatures\doc_feat.py	/^    def computeCohesive(self):$/;"	kind:member	line:113
+computeCohesive	../KorFeatures\kor_features.py	/^    def computeCohesive(self):$/;"	kind:member	line:93
+computeFeatures	../KorFeatures\doc_feat.py	/^    def computeFeatures(self):$/;"	kind:member	line:35
+computeFeatures	../KorFeatures\kor_features.py	/^    def computeFeatures(self):$/;"	kind:member	line:15
+computeStructures	../KorFeatures\doc_feat.py	/^    def computeStructures(self):$/;"	kind:member	line:85
+computeStructures	../KorFeatures\kor_features.py	/^    def computeStructures(self):$/;"	kind:member	line:65
+computeSurface	../KorFeatures\doc_feat.py	/^    def computeSurface(self):$/;"	kind:member	line:41
+computeSurface	../KorFeatures\kor_features.py	/^    def computeSurface(self):$/;"	kind:member	line:21
+computeTopics	../KorFeatures\doc_feat.py	/^    def computeTopics(self):$/;"	kind:member	line:187
+computeTopics	../KorFeatures\kor_features.py	/^    def computeTopics(self):$/;"	kind:member	line:167
+dep_relation.py	../KorFeatures\dep_relation.py	1;"	kind:file	line:1
+description	../setup.py	/^      description='Analyze features for Kor projects',$/;"	kind:variable	line:5
+doc_feat.py	../KorFeatures\doc_feat.py	1;"	kind:file	line:1
+embed_overlap	../KorFeatures\overlap_algo.py	/^    def embed_overlap(self, seq_a, seq_b):$/;"	kind:member	line:23
+feature_template	../KorFeatures\doc_feat.py	/^import feature_template$/;"	kind:namespace	line:4
+feature_template.py	../KorFeatures\feature_template.py	1;"	kind:file	line:1
+features	../KorFeatures\doc_feat.py	/^    def features(self):        $/;"	kind:member	line:32
+features	../KorFeatures\kor_features.py	/^    def features(self):        $/;"	kind:member	line:12
+find_main_verb	../KorFeatures\doc_feat.py	/^    def find_main_verb(self, seqi, seqDep, tokens):$/;"	kind:member	line:218
+find_main_verb	../KorFeatures\kor_features.py	/^    def find_main_verb(self, seqi, seqDep, tokens):$/;"	kind:member	line:198
+frequency_data.py	../KorFeatures\frequency_data.py	1;"	kind:file	line:1
+get	../KorFeatures\frequency_data.py	/^    def get(self, ch):$/;"	kind:member	line:19
+get	../KorFeatures\frequency_data.py	/^    def get(self, wd):       $/;"	kind:member	line:36
+get_connective_class	../KorFeatures\pos_class.py	/^    def get_connective_class(self):$/;"	kind:member	line:12
+get_content_class	../KorFeatures\pos_class.py	/^    def get_content_class(self):$/;"	kind:member	line:9
+get_functional_class	../KorFeatures\pos_class.py	/^    def get_functional_class(self):$/;"	kind:member	line:6
+get_rank	../KorFeatures\frequency_data.py	/^    def get_rank(self, ch):$/;"	kind:member	line:22
+get_rank	../KorFeatures\frequency_data.py	/^    def get_rank(self, wd):$/;"	kind:member	line:39
+get_seq_vector	../KorFeatures\overlap_algo.py	/^    def get_seq_vector(self, seq_x):$/;"	kind:member	line:33
+groupby	../KorFeatures\doc_feat.py	/^from itertools import groupby$/;"	kind:namespace	line:2
+isZhChars	../KorFeatures\zh_characters.py	/^def isZhChars(tok):    $/;"	kind:function	line:1
+kor_features.py	../KorFeatures\kor_features.py	1;"	kind:file	line:1
+license	../setup.py	/^      license='MIT',$/;"	kind:variable	line:9
+logger	../KorFeatures\frequency_data.py	/^logger = logging.getLogger(__file__)$/;"	kind:variable	line:6
+logging	../KorFeatures\frequency_data.py	/^import logging$/;"	kind:namespace	line:3
+make_features	../KorFeatures\feature_template.py	/^def make_features():$/;"	kind:function	line:3
+mean	../KorFeatures\doc_feat.py	/^def mean(rv):$/;"	kind:function	line:19
+np	../KorFeatures\doc_feat.py	/^import numpy as np$/;"	kind:namespace	line:3
+np	../KorFeatures\overlap_algo.py	/^import numpy as np$/;"	kind:namespace	line:3
+os	../KorFeatures\frequency_data.py	/^import os$/;"	kind:namespace	line:1
+overlap_algo.py	../KorFeatures\overlap_algo.py	1;"	kind:file	line:1
+packages	../setup.py	/^      packages=['KorFeatures'],$/;"	kind:variable	line:10
+pdb	../KorFeatures\doc_feat.py	/^import pdb$/;"	kind:namespace	line:10
+pdb	../KorFeatures\frequency_data.py	/^import pdb$/;"	kind:namespace	line:4
+pickle	../KorFeatures\frequency_data.py	/^import pickle$/;"	kind:namespace	line:2
+pos_class.py	../KorFeatures\pos_class.py	1;"	kind:file	line:1
+setLowPerctFeatures	../KorFeatures\doc_feat.py	/^    def setLowPerctFeatures(self, field, rv):$/;"	kind:member	line:211
+setLowPerctFeatures	../KorFeatures\kor_features.py	/^    def setLowPerctFeatures(self, field, rv):$/;"	kind:member	line:191
+setQuantileFeatures	../KorFeatures\doc_feat.py	/^    def setQuantileFeatures(self, field, rv):$/;"	kind:member	line:203
+setQuantileFeatures	../KorFeatures\kor_features.py	/^    def setQuantileFeatures(self, field, rv):$/;"	kind:member	line:183
+setup	../setup.py	/^from setuptools import setup$/;"	kind:namespace	line:1
+setup.py	../setup.py	1;"	kind:file	line:1
+test_features.py	../KorFeatures\tests\test_features.py	1;"	kind:file	line:1
+test_init	../KorFeatures\tests\test_features.py	/^    def test_init(self):$/;"	kind:member	line:6
+test_wordCount	../KorFeatures\tests\test_features.py	/^    def test_wordCount(self):$/;"	kind:member	line:10
+text_overlap	../KorFeatures\overlap_algo.py	/^    def text_overlap(self, seq_a, seq_b):$/;"	kind:member	line:9
+url	../setup.py	/^      url='http:\/\/github.com\/seantyh\/KorFeatures',$/;"	kind:variable	line:6
+version	../setup.py	/^      version='0.1',$/;"	kind:variable	line:4
+zh_characters.py	../KorFeatures\zh_characters.py	1;"	kind:file	line:1
+zip_safe	../setup.py	/^      zip_safe=False)$/;"	kind:variable	line:11

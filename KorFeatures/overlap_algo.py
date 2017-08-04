@@ -1,5 +1,5 @@
-from embDist.dist_algo import *
-from embDist.model_params import *
+from .embDist.dist_algo import *
+from .embDist.model_params import *
 import numpy as np
 
 class TokenOverlap:
