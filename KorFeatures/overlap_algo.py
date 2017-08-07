@@ -1,3 +1,5 @@
+from typing import List
+from .KorTypes import TokenData
 from .embDist.dist_algo import *
 from .embDist.model_params import *
 import numpy as np
@@ -6,9 +8,9 @@ class TokenOverlap:
     def __init__(self):
         pass
     
-    def text_overlap(self, seq_a, seq_b):
-        set_a = set([x["text"] for x in seq_a])
-        set_b = set([x["text"] for x in seq_b])
+    def text_overlap(self, seq_a: List[TokenData], seq_b: List[TokenData]):
+        set_a = set([x.text for x in seq_a])
+        set_b = set([x.text for x in seq_b])
         ints = set_a.intersection(set_b)
         return len(ints)
 
@@ -30,12 +32,12 @@ class EmbeddingOverlap:
         dist = (1-costheta)
         return dist
 
-    def get_seq_vector(self, seq_x):
+    def get_seq_vector(self, seq_x: List[TokenData]) -> np.ndarray:
         emb_query = self.emb_query
         seq_vec = np.zeros(self.emb_dim)
         n_tok = 0
         for tok in seq_x:
-            text = tok["text"]
+            text = tok.text
             v1 = emb_query.get_vector(text)
             if v1 is None: continue
             n_tok += 1

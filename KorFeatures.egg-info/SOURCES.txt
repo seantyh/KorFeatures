@@ -1,5 +1,14 @@
-KorFeatures/KorFeatures.py
+KorFeatures/PTree.py
 KorFeatures/__init__.py
+KorFeatures/dep_relation.py
+KorFeatures/doc_feat.py
+KorFeatures/feature_template.py
+KorFeatures/frequency_data.py
+KorFeatures/kor_features.py
+KorFeatures/oceanus_data_preproc.py
+KorFeatures/overlap_algo.py
+KorFeatures/pos_class.py
+KorFeatures/zh_characters.py
 KorFeatures.egg-info/PKG-INFO
 KorFeatures.egg-info/SOURCES.txt
 KorFeatures.egg-info/dependency_links.txt

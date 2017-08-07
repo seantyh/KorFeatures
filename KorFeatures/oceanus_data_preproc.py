@@ -18,8 +18,8 @@ class OceanusDataPreproc:
     def tokens(self) -> List[TokenData]:
         oc_tokens = self.oc_data.tokens
         kor_tokens: List[TokenData] = []                
-        for sent_idx, sent_token in enumerate(oc_tokens):
-            clauseCounter = 0
+        clauseCounter = 0
+        for sent_idx, sent_token in enumerate(oc_tokens):            
             for token in sent_token:
                 if len(token) < 5:
                     raise OceanusDataTokenFormatError("expect a length-5 tuple")
