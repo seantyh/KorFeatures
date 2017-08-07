@@ -1,4 +1,5 @@
 from typing import Text, List
+import json
 
 class TokenData:
     def __init__(self):
@@ -18,6 +19,9 @@ class TokenData:
         )
         return repr
 
+    def toJSON(self):
+        return self.__dict__
+
 class DepItem:
     def __init__(self):
         self.relation: Text = ""
@@ -33,4 +37,7 @@ class DepItem:
             dep=self.dependent
         )
         
+    def toJSON(self):
+        return self.__dict__
+
 DepData = List[DepItem]

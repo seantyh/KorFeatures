@@ -22,7 +22,7 @@ class TestFeatures(TestCase):
         self.assertTrue(len(korFeats.feats) > 0)
         self.assertTrue(feats['CharFreq_Q25'] > 0)
         self.assertTrue(feats['WordFreq_Q25'] > 0)
-        self.assertTrue(feats['CharRank_1500'] > 0)
+        self.assertTrue(feats['CharRank_800'] > 0)
         self.assertTrue(feats['WordRank_1000'] > 0)
         self.assertTrue(feats['nChar'] > 0)
         self.assertTrue(feats['nWord'] > 0)
