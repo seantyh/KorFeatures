@@ -17,6 +17,9 @@ class TokenData:
             si=self.sentenceIndex, ci=self.clauseIndex
         )
         return repr
+    
+    def toJSON(self):
+        return self.__dict__
 
 class DepItem:
     def __init__(self):
@@ -32,5 +35,8 @@ class DepItem:
             gov=self.governor,
             dep=self.dependent
         )
+
+    def toJSON(self):
+        return self.__dict__
         
 DepData = List[DepItem]
