@@ -1,6 +1,5 @@
 from typing import Text, List, Any, Dict
 from itertools import groupby
-from pandas import Series
 import numpy as np
 from . import feature_template
 from .frequency_data import *

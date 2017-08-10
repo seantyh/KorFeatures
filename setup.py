@@ -8,5 +8,6 @@ setup(name='KorFeatures',
       author_email='seantyh@gmail.com',
       license='MIT',
       packages=['KorFeatures'],
+      install_requires=['numpy'],
       zip_safe=False)
 
