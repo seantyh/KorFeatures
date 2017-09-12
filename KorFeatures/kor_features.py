@@ -8,6 +8,8 @@ from .overlap_algo import *
 from .zh_characters import *
 from .KorTypes import *
 from .PTree import PTree
+from .oceanus_data_preproc import OceanusDataPreproc
+from . import topics
 import pdb
 
 FUNC_POS_LIST = PosClass().get_functional_class()
@@ -23,6 +25,15 @@ def mean(rv):
     return sum(rv) / len(rv)
 
 class KorFeatures:
+    @staticmethod
+    def fromOceanusData(ocdata):
+        oc_preproc = OceanusDataPreproc(ocdata)
+        tokens = oc_preproc.tokens()
+        trees = oc_preproc.trees()
+        deps = oc_preproc.deps()
+        korFeats = KorFeatures("KorFeatures", tokens, trees, deps)
+        return korFeats
+        
     def __init__(self, dio_name: Text,
         tokens: List[TokenData],
         trees: List[PTree], deps: List[DepData]) -> None:        
@@ -38,11 +49,14 @@ class KorFeatures:
     def features(self) -> Dict[Text, float]:        
         return self.feats
 
+    def topicList(self):
+        return topics.TOPIC_LIST
+    
     def computeFeatures(self):
         self.computeSurface()
         self.computeStructures()
         self.computeCohesive()
-        # self.computeTopics()
+        self.computeTopics()
 
     def computeSurface(self):
         feats = self.feats
@@ -195,16 +209,22 @@ class KorFeatures:
         self.feats["SemanticOverlap_Given"] = mean(emb_overlap_given_vec)
         
     def computeTopics(self):
-        topic_query = TopicQuery()
-        topic_ids = topic_query.query_top_topics(self.name)
-        topic_ps = topic_query.query_top_probs(self.name)
-        if topic_ids is None: return
+        # topic_query = TopicQuery()
+        if not topics.test_topics_endpoint:
+            return
         
+        words = [x.text for x in self.tokens]
+        topics_data = topics.get_topics(words)
+        # topic_ids = topic_query.query_top_topics(self.name)
+        # topic_ps = topic_query.query_top_probs(self.name)
+        if topics_data is None: return
+        topic_ids = topics_data["topic"]
         self.feats["FirstTopic"] = topic_ids[0]
         self.feats["SecondTopic"] = topic_ids[1]
         self.feats["ThirdTopic"] = topic_ids[2]
 
-        prob5 = np.array(topic_ps[:5])
+        topic_probs = topics_data["p"]
+        prob5 = np.array(topic_probs[:5])
         self.feats["Top5CumuProp"] = np.sum(prob5)
 
         prob5x = np.concatenate([prob5, [1-np.sum(prob5)]])
