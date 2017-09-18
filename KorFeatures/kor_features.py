@@ -36,12 +36,13 @@ class KorFeatures:
         
     def __init__(self, dio_name: Text,
         tokens: List[TokenData],
-        trees: List[PTree], deps: List[DepData]) -> None:        
+        trees: List[PTree], deps: List[DepData], skipTopic=False) -> None:        
 
         self.name = dio_name        
         self.tokens = tokens
         self.trees = trees
         self.deps = deps
+        self.skipTopic = skipTopic
 
         self.feats = feature_template.make_features()        
         self.computeFeatures()
@@ -210,7 +211,10 @@ class KorFeatures:
         
     def computeTopics(self):
         # topic_query = TopicQuery()
-        if not topics.test_topics_endpoint:
+        if self.skipTopic:
+            return
+
+        if not topics.test_topics_endpoint():
             return
         
         words = [x.text for x in self.tokens]
