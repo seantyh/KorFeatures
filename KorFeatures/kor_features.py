@@ -3,6 +3,7 @@ from itertools import groupby
 import numpy as np
 from . import feature_template
 from .frequency_data import *
+from .stroke_data import StrokeData
 from .pos_class import PosClass
 from .overlap_algo import *
 from .zh_characters import *
@@ -18,7 +19,7 @@ CONN_POS_LIST = PosClass().get_connective_class()
 
 CharFreqData = CharFreq()
 WordFreqData = WordFreq()  
-
+stroke_map = StrokeData()
 
 def mean(rv):
     if (len(rv) == 0): return 0
@@ -79,6 +80,10 @@ class KorFeatures:
         self.setQuantileFeatures("WordFreq", word_freq_vec)
         self.setLowPerctFeatures("CharFreq", char_freq_vec)
         self.setLowPerctFeatures("WordFreq", word_freq_vec)
+        
+        # Stroke data
+        chStrokes = [stroke_map.get(ch) for ch in chars]
+        self.setQuantileFeatures("CharStrokes", chStrokes)
 
         # Rank data
         char_rank_vec = [CharFreqData.get_rank(x) for x in chars]
@@ -95,10 +100,12 @@ class KorFeatures:
         feats["WordRank_50K"] = wdnorm(sum((1 for x in word_rank_vec if x >= 2000 and x < 50000)))
         feats["WordRank_100K"] = wdnorm(sum((1 for x in word_rank_vec if x >= 50000 and x < 100000)))
 
-        # Clause/sentence length
+        # Word/clause/sentence length
+        wordLen = [len(wd.text) for wd in real_tokens]
         clsLen = {i: len(list(seq)) for i, seq in groupby(real_tokens, lambda x: x.clauseIndex)}
         senLen = {i: len(list(seq)) for i, seq in groupby(real_tokens, lambda x: x.sentenceIndex)}
         
+        self.setQuantileFeatures("WordLen", wordLen)
         self.setQuantileFeatures("ClsLen", list(clsLen.values()))
         self.setQuantileFeatures("SenLen", list(senLen.values()))        
 
