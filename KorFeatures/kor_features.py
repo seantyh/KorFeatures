@@ -37,8 +37,10 @@ class KorFeatures:
         
     def __init__(self, dio_name: Text,
         tokens: List[TokenData],
-        trees: List[PTree], deps: List[DepData]) -> None:        
-
+        trees: List[PTree], deps: List[DepData],
+        skipTopic=False) -> None:        
+        
+        self.skipTopic = skipTopic
         self.name = dio_name        
         self.tokens = tokens
         self.trees = trees
@@ -57,7 +59,7 @@ class KorFeatures:
         self.computeSurface()
         self.computeStructures()
         self.computeCohesive()
-        self.computeTopics()
+        # self.computeTopics()
 
     def computeSurface(self):
         feats = self.feats
@@ -137,13 +139,13 @@ class KorFeatures:
             mv_pos = self.find_token_position_in_sentence(main_verb)
             nwMV.append(mv_pos)        
         nwMV = list(filter(lambda x: x>0, nwMV))
-
+        
         if (len(nwMV)) == 0: nwMV = [0]
         self.feats["nWordBeforeMV"] = sum(nwMV)/len(nwMV)        
 
     def computeCohesive(self):
         toks = self.tokens
-
+        
         # number of connective
         nConn = len(list(filter(lambda x: x.pos in CONN_POS_LIST, toks)))
         self.feats["nConn"] = nConn
@@ -256,7 +258,7 @@ class KorFeatures:
         rootDep: DepData = [x for x in seqDep if x.relation == "root"]
         if (len(rootDep) == 0): return None
         
-        root_depi = int(rootDep[0].depIndex)
+        root_depi = int(rootDep[0].depIndex) - 1
         main_token = [x for i, x in enumerate(tokens) if i == root_depi]
         if len(main_token) == 0:
             return None

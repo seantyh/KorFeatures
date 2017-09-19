@@ -2,6 +2,7 @@ import unittest
 from unittest import TestCase
 from KorFeatures import KorFeatures, OceanusDataPreproc
 import pyOceanus
+import pdb
 
 class TestFeatures(TestCase):
     def test_init(self):        
@@ -9,7 +10,7 @@ class TestFeatures(TestCase):
 
     def test_features(self):
         oc = pyOceanus.Oceanus()
-        ocdata = oc.parse("這是一個測試的句子，有的地方沒有句號。句號後有一個新句子，這就是全部的材料。")
+        ocdata = oc.parse("這個項目測試一個簡單的句子，雖然還有一個沒有句號的情況。句號後有一個新句子，這就是全部的材料。")
         oc_preproc = OceanusDataPreproc(ocdata)
         
         korFeats = KorFeatures("test_sentence",
