@@ -6,68 +6,83 @@
 !_TAG_PROGRAM_VERSION	5.8	//
 Any	../KorFeatures\kor_features.py	/^from typing import Text, List, Any, Dict$/;"	kind:namespace	line:1
 BASEPATH	../KorFeatures\frequency_data.py	/^BASEPATH = os.path.dirname(__file__)$/;"	kind:variable	line:7
+BASEPATH	../KorFeatures\stroke_data.py	/^BASEPATH = os.path.dirname(__file__)$/;"	kind:variable	line:4
 CLAUSE_DELIMS	../KorFeatures\oceanus_data_preproc.py	/^CLAUSE_DELIMS = ("，", "；", "：")$/;"	kind:variable	line:9
 CONN_POS_LIST	../KorFeatures\doc_feat.py	/^CONN_POS_LIST = PosClass().get_connective_class()$/;"	kind:variable	line:14
-CONN_POS_LIST	../KorFeatures\kor_features.py	/^CONN_POS_LIST = PosClass().get_connective_class()$/;"	kind:variable	line:16
+CONN_POS_LIST	../KorFeatures\kor_features.py	/^CONN_POS_LIST = PosClass().get_connective_class()$/;"	kind:variable	line:17
 CONT_POS_LIST	../KorFeatures\doc_feat.py	/^CONT_POS_LIST = PosClass().get_content_class()$/;"	kind:variable	line:13
-CONT_POS_LIST	../KorFeatures\kor_features.py	/^CONT_POS_LIST = PosClass().get_content_class()$/;"	kind:variable	line:15
+CONT_POS_LIST	../KorFeatures\kor_features.py	/^CONT_POS_LIST = PosClass().get_content_class()$/;"	kind:variable	line:16
 CharFreq	../KorFeatures\frequency_data.py	/^class CharFreq:$/;"	kind:class	line:8
 CharFreqData	../KorFeatures\doc_feat.py	/^CharFreqData = FrequencyData.CharFreq()$/;"	kind:variable	line:16
-CharFreqData	../KorFeatures\kor_features.py	/^CharFreqData = CharFreq()$/;"	kind:variable	line:18
+CharFreqData	../KorFeatures\kor_features.py	/^CharFreqData = CharFreq()$/;"	kind:variable	line:19
 DepData	../KorFeatures\KorTypes\__init__.py	/^from .kor_types import DepData, DepItem/;"	kind:namespace	line:3
-DepData	../KorFeatures\KorTypes\kor_types.py	/^DepData = List[DepItem]/;"	kind:variable	line:36
+DepData	../KorFeatures\KorTypes\kor_types.py	/^DepData = List[DepItem]$/;"	kind:variable	line:42
 DepItem	../KorFeatures\KorTypes\__init__.py	/^from .kor_types import DepData, DepItem/;"	kind:namespace	line:3
-DepItem	../KorFeatures\KorTypes\kor_types.py	/^class DepItem:$/;"	kind:class	line:21
+DepItem	../KorFeatures\KorTypes\kor_types.py	/^class DepItem:$/;"	kind:class	line:24
 DepRelation	../KorFeatures\dep_relation.py	/^class DepRelation:$/;"	kind:class	line:1
 Dict	../KorFeatures\kor_features.py	/^from typing import Text, List, Any, Dict$/;"	kind:namespace	line:1
 DocFeat	../KorFeatures\doc_feat.py	/^class DocFeat:$/;"	kind:class	line:23
 EmbDistQuery	../KorFeatures\embDist\dist_algo.py	/^class EmbDistQuery:$/;"	kind:class	line:6
 EmbDistQuery	../KorFeatures\embDist\main_test.py	/^from dist_algo import EmbDistQuery$/;"	kind:namespace	line:3
-EmbeddingOverlap	../KorFeatures\overlap_algo.py	/^class EmbeddingOverlap:$/;"	kind:class	line:15
+EmbeddingOverlap	../KorFeatures\overlap_algo.py	/^class EmbeddingOverlap:$/;"	kind:class	line:17
 FUNC_POS_LIST	../KorFeatures\doc_feat.py	/^FUNC_POS_LIST = PosClass().get_functional_class()$/;"	kind:variable	line:12
-FUNC_POS_LIST	../KorFeatures\kor_features.py	/^FUNC_POS_LIST = PosClass().get_functional_class()$/;"	kind:variable	line:14
+FUNC_POS_LIST	../KorFeatures\kor_features.py	/^FUNC_POS_LIST = PosClass().get_functional_class()$/;"	kind:variable	line:15
 FrequencyData	../KorFeatures\doc_feat.py	/^import FrequencyData$/;"	kind:namespace	line:5
 Get	../KorFeatures\embDist\model_params.py	/^    def Get(name = None):$/;"	kind:member	line:17
 KorFeatures	../KorFeatures\__init__.py	/^from .kor_features import KorFeatures$/;"	kind:namespace	line:1
-KorFeatures	../KorFeatures\kor_features.py	/^class KorFeatures:$/;"	kind:class	line:21
+KorFeatures	../KorFeatures\kor_features.py	/^class KorFeatures:$/;"	kind:class	line:27
 KorFeatures	../KorFeatures\tests\test_features.py	/^from KorFeatures import KorFeatures, OceanusDataPreproc$/;"	kind:namespace	line:3
+LexFeature	../KorFeatures\lexical_matcher.py	/^LexFeature = Union[str, List[str]]$/;"	kind:variable	line:5
+LexicalMatcher	../KorFeatures\lexical_matcher.py	/^class LexicalMatcher:$/;"	kind:class	line:7
+LexicalMatcher	../KorFeatures\tests\test_lexical_matcher.py	/^from KorFeatures.lexical_matcher import LexicalMatcher$/;"	kind:namespace	line:2
+LexicalMatcherTest	../KorFeatures\tests\test_lexical_matcher.py	/^class LexicalMatcherTest(unittest.TestCase):$/;"	kind:class	line:4
 List	../KorFeatures\KorTypes\kor_types.py	/^from typing import Text, List$/;"	kind:namespace	line:1
 List	../KorFeatures\kor_features.py	/^from typing import Text, List, Any, Dict$/;"	kind:namespace	line:1
+List	../KorFeatures\lexical_matcher.py	/^from typing import List, Union$/;"	kind:namespace	line:3
 List	../KorFeatures\oceanus_data_preproc.py	/^from typing import List, Tuple, Text$/;"	kind:namespace	line:1
+List	../KorFeatures\overlap_algo.py	/^from typing import List$/;"	kind:namespace	line:1
 ModelParams	../KorFeatures\embDist\model_params.py	/^class ModelParams:$/;"	kind:class	line:1
 OceanusData	../KorFeatures\oceanus_data_preproc.py	/^from pyOceanus.oceanus_data import OceanusData$/;"	kind:namespace	line:3
 OceanusDataPreproc	../KorFeatures\__init__.py	/^from .oceanus_data_preproc import OceanusDataPreproc$/;"	kind:namespace	line:2
+OceanusDataPreproc	../KorFeatures\kor_features.py	/^from .oceanus_data_preproc import OceanusDataPreproc$/;"	kind:namespace	line:11
 OceanusDataPreproc	../KorFeatures\oceanus_data_preproc.py	/^class OceanusDataPreproc:$/;"	kind:class	line:14
 OceanusDataPreproc	../KorFeatures\tests\test_features.py	/^from KorFeatures import KorFeatures, OceanusDataPreproc$/;"	kind:namespace	line:3
 OceanusDataPreproc	../KorFeatures\tests\test_oceanus_data_preproc.py	/^from KorFeatures import OceanusDataPreproc$/;"	kind:namespace	line:3
 OceanusDataTokenFormatError	../KorFeatures\oceanus_data_preproc.py	/^class OceanusDataTokenFormatError(Exception):$/;"	kind:class	line:11
 OceanusTree	../KorFeatures\oceanus_data_preproc.py	/^from pyOceanus.tree_parser import Tree as OceanusTree$/;"	kind:namespace	line:4
+OrderedDict	../KorFeatures\etc\cwn\cwn_example_extraction.py	/^from collections import defaultdict, OrderedDict$/;"	kind:namespace	line:3
 OrderedDict	../KorFeatures\feature_template.py	/^from collections import OrderedDict$/;"	kind:namespace	line:1
 PTree	../KorFeatures\PTree.py	/^class PTree:$/;"	kind:class	line:3
-PTree	../KorFeatures\kor_features.py	/^from .PTree import PTree$/;"	kind:namespace	line:11
+PTree	../KorFeatures\kor_features.py	/^from .PTree import PTree$/;"	kind:namespace	line:10
 PTree	../KorFeatures\oceanus_data_preproc.py	/^from .PTree import PTree$/;"	kind:namespace	line:6
 PTree.py	../KorFeatures\PTree.py	1;"	kind:file	line:1
 PosClass	../KorFeatures\doc_feat.py	/^from pos_class import PosClass$/;"	kind:namespace	line:6
-PosClass	../KorFeatures\kor_features.py	/^from .pos_class import PosClass$/;"	kind:namespace	line:7
+PosClass	../KorFeatures\kor_features.py	/^from .pos_class import PosClass$/;"	kind:namespace	line:6
 PosClass	../KorFeatures\pos_class.py	/^class PosClass:$/;"	kind:class	line:3
 Series	../KorFeatures\doc_feat.py	/^from pandas import Series$/;"	kind:namespace	line:1
-Series	../KorFeatures\kor_features.py	/^from pandas import Series$/;"	kind:namespace	line:3
+StrokeData	../KorFeatures\stroke_data.py	/^class StrokeData():$/;"	kind:class	line:6
 TestCase	../KorFeatures\tests\test_features.py	/^from unittest import TestCase$/;"	kind:namespace	line:2
 TestCase	../KorFeatures\tests\test_oceanus_data_preproc.py	/^from unittest import TestCase$/;"	kind:namespace	line:1
-TestFeatures	../KorFeatures\tests\test_features.py	/^class TestFeatures(TestCase):$/;"	kind:class	line:6
+TestFeatures	../KorFeatures\tests\test_features.py	/^class TestFeatures(TestCase):$/;"	kind:class	line:7
 TestOceanusDataPreproc	../KorFeatures\tests\test_oceanus_data_preproc.py	/^class TestOceanusDataPreproc(TestCase):$/;"	kind:class	line:6
 Text	../KorFeatures\KorTypes\kor_types.py	/^from typing import Text, List$/;"	kind:namespace	line:1
 Text	../KorFeatures\kor_features.py	/^from typing import Text, List, Any, Dict$/;"	kind:namespace	line:1
 Text	../KorFeatures\oceanus_data_preproc.py	/^from typing import List, Tuple, Text$/;"	kind:namespace	line:1
 TokenData	../KorFeatures\KorTypes\__init__.py	/^from .kor_types import TokenData$/;"	kind:namespace	line:2
 TokenData	../KorFeatures\KorTypes\kor_types.py	/^class TokenData:$/;"	kind:class	line:3
-TokenOverlap	../KorFeatures\overlap_algo.py	/^class TokenOverlap:$/;"	kind:class	line:5
+TokenData	../KorFeatures\overlap_algo.py	/^from .KorTypes import TokenData$/;"	kind:namespace	line:2
+TokenOverlap	../KorFeatures\overlap_algo.py	/^class TokenOverlap:$/;"	kind:class	line:7
+TopicModel	../KorFeatures\__init__.py	/^from .topics import TopicModel$/;"	kind:namespace	line:3
+TopicModel	../KorFeatures\tests\test_topics.py	/^from KorFeatures import TopicModel$/;"	kind:namespace	line:3
+TopicModel	../KorFeatures\topics.py	/^class TopicModel:$/;"	kind:class	line:7
 TopicQuery	../KorFeatures\doc_feat.py	/^from query_topic import TopicQuery$/;"	kind:namespace	line:9
+TopicTest	../KorFeatures\tests\test_topics.py	/^class TopicTest(unittest.TestCase):$/;"	kind:class	line:5
 Tuple	../KorFeatures\oceanus_data_preproc.py	/^from typing import List, Tuple, Text$/;"	kind:namespace	line:1
+Union	../KorFeatures\lexical_matcher.py	/^from typing import List, Union$/;"	kind:namespace	line:3
 WordFreq	../KorFeatures\frequency_data.py	/^class WordFreq:$/;"	kind:class	line:25
 WordFreqData	../KorFeatures\doc_feat.py	/^WordFreqData = FrequencyData.WordFreq()  $/;"	kind:variable	line:17
-WordFreqData	../KorFeatures\kor_features.py	/^WordFreqData = WordFreq()  $/;"	kind:variable	line:19
-__init__	../KorFeatures\KorTypes\kor_types.py	/^    def __init__(self):$/;"	kind:member	line:22
+WordFreqData	../KorFeatures\kor_features.py	/^WordFreqData = WordFreq()  $/;"	kind:variable	line:20
+__init__	../KorFeatures\KorTypes\kor_types.py	/^    def __init__(self):$/;"	kind:member	line:25
 __init__	../KorFeatures\KorTypes\kor_types.py	/^    def __init__(self):$/;"	kind:member	line:4
 __init__	../KorFeatures\PTree.py	/^    def __init__(self, t):$/;"	kind:member	line:4
 __init__	../KorFeatures\dep_relation.py	/^    def __init__(self, rel, g, d):$/;"	kind:member	line:2
@@ -75,16 +90,19 @@ __init__	../KorFeatures\doc_feat.py	/^    def __init__(self, dio_name, tokens, s
 __init__	../KorFeatures\embDist\dist_algo.py	/^    def __init__(self, model_params):$/;"	kind:member	line:7
 __init__	../KorFeatures\frequency_data.py	/^    def __init__(self):$/;"	kind:member	line:26
 __init__	../KorFeatures\frequency_data.py	/^    def __init__(self):$/;"	kind:member	line:9
-__init__	../KorFeatures\kor_features.py	/^    def __init__(self, dio_name: Text,$/;"	kind:member	line:22
+__init__	../KorFeatures\kor_features.py	/^    def __init__(self, dio_name: Text,$/;"	kind:member	line:37
+__init__	../KorFeatures\lexical_matcher.py	/^    def __init__(self):$/;"	kind:member	line:8
 __init__	../KorFeatures\oceanus_data_preproc.py	/^    def __init__(self, oc_data: OceanusData) -> None:$/;"	kind:member	line:15
-__init__	../KorFeatures\overlap_algo.py	/^    def __init__(self):$/;"	kind:member	line:16
-__init__	../KorFeatures\overlap_algo.py	/^    def __init__(self):$/;"	kind:member	line:6
+__init__	../KorFeatures\overlap_algo.py	/^    def __init__(self):$/;"	kind:member	line:18
+__init__	../KorFeatures\overlap_algo.py	/^    def __init__(self):$/;"	kind:member	line:8
 __init__	../KorFeatures\pos_class.py	/^    def __init__(self):$/;"	kind:member	line:4
+__init__	../KorFeatures\stroke_data.py	/^    def __init__(self):$/;"	kind:member	line:7
+__init__	../KorFeatures\topics.py	/^    def __init__(self, model_path, dict_path):        $/;"	kind:member	line:8
 __init__.py	../KorFeatures\KorTypes\__init__.py	1;"	kind:file	line:1
 __init__.py	../KorFeatures\__init__.py	1;"	kind:file	line:1
 __init__.py	../KorFeatures\tests\__init__.py	1;"	kind:file	line:1
 __repr__	../KorFeatures\KorTypes\kor_types.py	/^    def __repr__(self):$/;"	kind:member	line:13
-__repr__	../KorFeatures\KorTypes\kor_types.py	/^    def __repr__(self):$/;"	kind:member	line:29
+__repr__	../KorFeatures\KorTypes\kor_types.py	/^    def __repr__(self):$/;"	kind:member	line:32
 __repr__	../KorFeatures\PTree.py	/^    def __repr__(self):$/;"	kind:member	line:40
 __repr__	../KorFeatures\dep_relation.py	/^    def __repr__(self):$/;"	kind:member	line:7
 __str__	../KorFeatures\PTree.py	/^    def __str__(self):$/;"	kind:member	line:34
@@ -93,18 +111,26 @@ as4char_params	../KorFeatures\embDist\model_params.py	/^    as4char_params = {$/
 as4word_params	../KorFeatures\embDist\model_params.py	/^    as4word_params = {$/;"	kind:variable	line:9
 author	../setup.py	/^      author='Sean Tseng',$/;"	kind:variable	line:7
 author_email	../setup.py	/^      author_email='seantyh@gmail.com',$/;"	kind:variable	line:8
+cache_topic_heads	../KorFeatures\topics.py	/^    def cache_topic_heads(self):$/;"	kind:member	line:78
 center_normalize_mat	../KorFeatures\embDist\dist_algo.py	/^    def center_normalize_mat(self, mat):$/;"	kind:member	line:82
 chain	../KorFeatures\oceanus_data_preproc.py	/^from itertools import chain$/;"	kind:namespace	line:2
 computeCohesive	../KorFeatures\doc_feat.py	/^    def computeCohesive(self):$/;"	kind:member	line:113
-computeCohesive	../KorFeatures\kor_features.py	/^    def computeCohesive(self):$/;"	kind:member	line:112
+computeCohesive	../KorFeatures\kor_features.py	/^    def computeCohesive(self):$/;"	kind:member	line:138
 computeFeatures	../KorFeatures\doc_feat.py	/^    def computeFeatures(self):$/;"	kind:member	line:35
-computeFeatures	../KorFeatures\kor_features.py	/^    def computeFeatures(self):$/;"	kind:member	line:34
+computeFeatures	../KorFeatures\kor_features.py	/^    def computeFeatures(self):$/;"	kind:member	line:56
 computeStructures	../KorFeatures\doc_feat.py	/^    def computeStructures(self):$/;"	kind:member	line:85
-computeStructures	../KorFeatures\kor_features.py	/^    def computeStructures(self):$/;"	kind:member	line:84
+computeStructures	../KorFeatures\kor_features.py	/^    def computeStructures(self):$/;"	kind:member	line:106
 computeSurface	../KorFeatures\doc_feat.py	/^    def computeSurface(self):$/;"	kind:member	line:41
-computeSurface	../KorFeatures\kor_features.py	/^    def computeSurface(self):$/;"	kind:member	line:40
+computeSurface	../KorFeatures\kor_features.py	/^    def computeSurface(self):$/;"	kind:member	line:62
 computeTopics	../KorFeatures\doc_feat.py	/^    def computeTopics(self):$/;"	kind:member	line:187
-computeTopics	../KorFeatures\kor_features.py	/^    def computeTopics(self):$/;"	kind:member	line:186
+computeTopics	../KorFeatures\kor_features.py	/^    def computeTopics(self):$/;"	kind:member	line:212
+conn	../KorFeatures\etc\cwn\cwn_example_extraction.py	/^conn = sqlite3.connect("cwn.sqlite")$/;"	kind:variable	line:5
+corpora	../KorFeatures\topics.py	/^from gensim import models, corpora$/;"	kind:namespace	line:5
+cur	../KorFeatures\etc\cwn\cwn_example_extraction.py	/^cur = conn.cursor()$/;"	kind:variable	line:6
+cwn_example_extraction.py	../KorFeatures\etc\cwn\cwn_example_extraction.py	1;"	kind:file	line:1
+cwn_sense	../KorFeatures\etc\cwn\cwn_sense_counter.py	/^        cwn_sense = json.load(fout)$/;"	kind:variable	line:5
+cwn_sense_counter.py	../KorFeatures\etc\cwn\cwn_sense_counter.py	1;"	kind:file	line:1
+defaultdict	../KorFeatures\etc\cwn\cwn_example_extraction.py	/^from collections import defaultdict, OrderedDict$/;"	kind:namespace	line:3
 dep_relation.py	../KorFeatures\dep_relation.py	1;"	kind:file	line:1
 deps	../KorFeatures\oceanus_data_preproc.py	/^    def deps(self) -> List[DepData]:$/;"	kind:member	line:44
 depth	../KorFeatures\PTree.py	/^    def depth(self):$/;"	kind:member	line:8
@@ -113,53 +139,80 @@ dirname	../KorFeatures\pos_class.py	/^from os.path import dirname, abspath, join
 dist_algo.py	../KorFeatures\embDist\dist_algo.py	1;"	kind:file	line:1
 dist_query	../KorFeatures\embDist\main_test.py	/^    dist_query = EmbDistQuery(model_params)$/;"	kind:variable	line:14
 doc_feat.py	../KorFeatures\doc_feat.py	1;"	kind:file	line:1
-embed_overlap	../KorFeatures\overlap_algo.py	/^    def embed_overlap(self, seq_a, seq_b):$/;"	kind:member	line:23
+embed_overlap	../KorFeatures\overlap_algo.py	/^    def embed_overlap(self, seq_a, seq_b):$/;"	kind:member	line:25
+example_cont	../KorFeatures\etc\cwn\cwn_example_extraction.py	/^    example_cont = row[3]$/;"	kind:variable	line:26
+exobj	../KorFeatures\etc\cwn\cwn_example_extraction.py	/^exobj = defaultdict(OrderedDict)$/;"	kind:variable	line:19
 feature_template	../KorFeatures\doc_feat.py	/^import feature_template$/;"	kind:namespace	line:4
-feature_template	../KorFeatures\kor_features.py	/^from . import feature_template$/;"	kind:namespace	line:5
+feature_template	../KorFeatures\kor_features.py	/^from . import feature_template$/;"	kind:namespace	line:4
 feature_template.py	../KorFeatures\feature_template.py	1;"	kind:file	line:1
 features	../KorFeatures\doc_feat.py	/^    def features(self):        $/;"	kind:member	line:32
-features	../KorFeatures\kor_features.py	/^    def features(self) -> Dict[Text, float]:        $/;"	kind:member	line:31
+features	../KorFeatures\kor_features.py	/^    def features(self) -> Dict[Text, float]:        $/;"	kind:member	line:50
 find_main_verb	../KorFeatures\doc_feat.py	/^    def find_main_verb(self, seqi, seqDep, tokens):$/;"	kind:member	line:218
-find_main_verb	../KorFeatures\kor_features.py	/^    def find_main_verb(self, seqi, seqDep, tokens):$/;"	kind:member	line:217
+find_main_verb	../KorFeatures\kor_features.py	/^    def find_main_verb(self, sentenceIdx: int, seqDep: DepData, tokens) -> TokenData:$/;"	kind:member	line:252
+find_token_position_in_sentence	../KorFeatures\kor_features.py	/^    def find_token_position_in_sentence(self, token: TokenData) -> int:$/;"	kind:member	line:266
+fout	../KorFeatures\etc\cwn\cwn_sense_counter.py	/^    fout = open("cwn_sense_count.txt", "w", encoding="UTF-8")$/;"	kind:variable	line:10
 frequency_data.py	../KorFeatures\frequency_data.py	1;"	kind:file	line:1
+fromOceanusData	../KorFeatures\kor_features.py	/^    def fromOceanusData(ocdata):$/;"	kind:member	line:29
 get	../KorFeatures\frequency_data.py	/^    def get(self, ch):$/;"	kind:member	line:19
 get	../KorFeatures\frequency_data.py	/^    def get(self, wd):       $/;"	kind:member	line:36
+get	../KorFeatures\stroke_data.py	/^    def get(self, ch):$/;"	kind:member	line:11
 get_connective_class	../KorFeatures\pos_class.py	/^    def get_connective_class(self):$/;"	kind:member	line:15
 get_content_class	../KorFeatures\pos_class.py	/^    def get_content_class(self):$/;"	kind:member	line:11
 get_distance	../KorFeatures\embDist\dist_algo.py	/^    def get_distance(self, w1, w2, dist_cos = True):$/;"	kind:member	line:44
 get_distance_vec	../KorFeatures\embDist\dist_algo.py	/^    def get_distance_vec(self, vec1, vec2, dist_cos = True):$/;"	kind:member	line:31
+get_doc_topic_prob	../KorFeatures\topics.py	/^    def get_doc_topic_prob(self, word_list):$/;"	kind:member	line:34
 get_functional_class	../KorFeatures\pos_class.py	/^    def get_functional_class(self):$/;"	kind:member	line:7
 get_neighbors	../KorFeatures\embDist\dist_algo.py	/^    def get_neighbors(self, w1, dist_cos = True):$/;"	kind:member	line:62
 get_rank	../KorFeatures\frequency_data.py	/^    def get_rank(self, ch):$/;"	kind:member	line:22
 get_rank	../KorFeatures\frequency_data.py	/^    def get_rank(self, wd):$/;"	kind:member	line:39
-get_seq_vector	../KorFeatures\overlap_algo.py	/^    def get_seq_vector(self, seq_x):$/;"	kind:member	line:33
+get_seq_vector	../KorFeatures\overlap_algo.py	/^    def get_seq_vector(self, seq_x: List[TokenData]) -> np.ndarray:$/;"	kind:member	line:35
 get_vec_neighbors	../KorFeatures\embDist\dist_algo.py	/^    def get_vec_neighbors(self, vec, dist_cos = True):$/;"	kind:member	line:69
 get_vector	../KorFeatures\embDist\dist_algo.py	/^    def get_vector(self, word):$/;"	kind:member	line:56
+get_word_assoc	../KorFeatures\topics.py	/^    def get_word_assoc(self, words_y, words_x, theta = None):$/;"	kind:member	line:49
+get_word_topic_prob	../KorFeatures\topics.py	/^    def get_word_topic_prob(self, word, theta = None):$/;"	kind:member	line:13
 groupby	../KorFeatures\doc_feat.py	/^from itertools import groupby$/;"	kind:namespace	line:2
 groupby	../KorFeatures\kor_features.py	/^from itertools import groupby$/;"	kind:namespace	line:2
+install_requires	../setup.py	/^      install_requires=['numpy'],$/;"	kind:variable	line:11
 intersect	../KorFeatures\PTree.py	/^    def intersect(self, to):$/;"	kind:member	line:20
 isZhChars	../KorFeatures\zh_characters.py	/^def isZhChars(tok):    $/;"	kind:function	line:1
 join	../KorFeatures\pos_class.py	/^from os.path import dirname, abspath, join$/;"	kind:namespace	line:1
+join	../KorFeatures\tests\test_topics.py	/^from os.path import join$/;"	kind:namespace	line:2
+json	../KorFeatures\etc\cwn\cwn_example_extraction.py	/^import json$/;"	kind:namespace	line:2
+json	../KorFeatures\etc\cwn\cwn_sense_counter.py	/^import json$/;"	kind:namespace	line:1
+json	../KorFeatures\lexical_matcher.py	/^import json$/;"	kind:namespace	line:1
+json	../KorFeatures\stroke_data.py	/^import json$/;"	kind:namespace	line:2
 kor_features.py	../KorFeatures\kor_features.py	1;"	kind:file	line:1
 kor_types.py	../KorFeatures\KorTypes\kor_types.py	1;"	kind:file	line:1
+lemma_type	../KorFeatures\etc\cwn\cwn_example_extraction.py	/^    lemma_type = row[1]$/;"	kind:variable	line:24
+lemmas	../KorFeatures\etc\cwn\cwn_sense_counter.py	/^    lemmas = sorted(sense_map.keys(), key = sense_map.get, reverse=True)$/;"	kind:variable	line:11
+lexical_matcher.py	../KorFeatures\lexical_matcher.py	1;"	kind:file	line:1
 license	../setup.py	/^      license='MIT',$/;"	kind:variable	line:9
 load_vocab	../KorFeatures\embDist\dist_algo.py	/^    def load_vocab(self, fpath):$/;"	kind:member	line:88
 logger	../KorFeatures\frequency_data.py	/^logger = logging.getLogger(__file__)$/;"	kind:variable	line:6
 logging	../KorFeatures\frequency_data.py	/^import logging$/;"	kind:namespace	line:3
+logging	../KorFeatures\stroke_data.py	/^import logging$/;"	kind:namespace	line:3
+logsumexp	../KorFeatures\topics.py	/^from scipy.special import logsumexp$/;"	kind:namespace	line:4
 main_test.py	../KorFeatures\embDist\main_test.py	1;"	kind:file	line:1
 make_features	../KorFeatures\feature_template.py	/^def make_features():$/;"	kind:function	line:3
 mapTree	../KorFeatures\oceanus_data_preproc.py	/^    def mapTree(self, x: OceanusTree) -> PTree:$/;"	kind:member	line:61
+match_features	../KorFeatures\lexical_matcher.py	/^    def match_features(self, inputs: List[str], feat_vec: List[LexFeature]):$/;"	kind:member	line:11
+match_single_feature	../KorFeatures\lexical_matcher.py	/^    def match_single_feature(self, inputs, feature: List[str]):$/;"	kind:member	line:26
 mean	../KorFeatures\doc_feat.py	/^def mean(rv):$/;"	kind:function	line:19
+mean	../KorFeatures\kor_features.py	/^def mean(rv):$/;"	kind:function	line:23
 model_params	../KorFeatures\embDist\main_test.py	/^    model_params = {$/;"	kind:variable	line:7
 model_params.py	../KorFeatures\embDist\model_params.py	1;"	kind:file	line:1
+models	../KorFeatures\topics.py	/^from gensim import models, corpora$/;"	kind:namespace	line:5
+n_example	../KorFeatures\etc\cwn\cwn_example_extraction.py	/^n_example = 0$/;"	kind:variable	line:20
 np	../KorFeatures\doc_feat.py	/^import numpy as np$/;"	kind:namespace	line:3
 np	../KorFeatures\embDist\dist_algo.py	/^import numpy as np$/;"	kind:namespace	line:2
 np	../KorFeatures\embDist\main_test.py	/^import numpy as np$/;"	kind:namespace	line:1
-np	../KorFeatures\kor_features.py	/^import numpy as np$/;"	kind:namespace	line:4
-np	../KorFeatures\overlap_algo.py	/^import numpy as np$/;"	kind:namespace	line:3
+np	../KorFeatures\kor_features.py	/^import numpy as np$/;"	kind:namespace	line:3
+np	../KorFeatures\overlap_algo.py	/^import numpy as np$/;"	kind:namespace	line:5
+np	../KorFeatures\topics.py	/^import numpy as np$/;"	kind:namespace	line:3
 oceanus_data_preproc.py	../KorFeatures\oceanus_data_preproc.py	1;"	kind:file	line:1
 os	../KorFeatures\embDist\dist_algo.py	/^import os$/;"	kind:namespace	line:3
 os	../KorFeatures\frequency_data.py	/^import os$/;"	kind:namespace	line:1
+os	../KorFeatures\stroke_data.py	/^import os$/;"	kind:namespace	line:1
 overlap_algo.py	../KorFeatures\overlap_algo.py	1;"	kind:file	line:1
 packages	../setup.py	/^      packages=['KorFeatures'],$/;"	kind:variable	line:10
 pair_dist_cos	../KorFeatures\embDist\dist_algo.py	/^    def pair_dist_cos(self, c1, c2):$/;"	kind:member	line:25
@@ -169,32 +222,59 @@ pdb	../KorFeatures\PTree.py	/^import pdb$/;"	kind:namespace	line:1
 pdb	../KorFeatures\doc_feat.py	/^import pdb$/;"	kind:namespace	line:10
 pdb	../KorFeatures\embDist\dist_algo.py	/^import pdb$/;"	kind:namespace	line:1
 pdb	../KorFeatures\embDist\main_test.py	/^import pdb$/;"	kind:namespace	line:2
+pdb	../KorFeatures\etc\cwn\cwn_example_extraction.py	/^import pdb$/;"	kind:namespace	line:40
 pdb	../KorFeatures\frequency_data.py	/^import pdb$/;"	kind:namespace	line:4
-pdb	../KorFeatures\kor_features.py	/^import pdb$/;"	kind:namespace	line:12
+pdb	../KorFeatures\kor_features.py	/^import pdb$/;"	kind:namespace	line:13
+pdb	../KorFeatures\lexical_matcher.py	/^    import pdb$/;"	kind:namespace	line:25
+pdb	../KorFeatures\lexical_matcher.py	/^import pdb$/;"	kind:namespace	line:2
 pdb	../KorFeatures\oceanus_data_preproc.py	/^import pdb$/;"	kind:namespace	line:7
+pdb	../KorFeatures\tests\test_features.py	/^import pdb$/;"	kind:namespace	line:5
+pdb	../KorFeatures\topics.py	/^    import pdb$/;"	kind:namespace	line:46
+pdb	../KorFeatures\topics.py	/^import pdb$/;"	kind:namespace	line:2
 pickle	../KorFeatures\frequency_data.py	/^import pickle$/;"	kind:namespace	line:2
 pos_class.py	../KorFeatures\pos_class.py	1;"	kind:file	line:1
+print_topic	../KorFeatures\topics.py	/^    def print_topic(self, topic_probs):$/;"	kind:member	line:85
 pyOceanus	../KorFeatures\tests\test_features.py	/^import pyOceanus$/;"	kind:namespace	line:4
 pyOceanus	../KorFeatures\tests\test_oceanus_data_preproc.py	/^import pyOceanus$/;"	kind:namespace	line:4
+requests	../KorFeatures\topics.py	/^import requests$/;"	kind:namespace	line:1
+sense_def	../KorFeatures\etc\cwn\cwn_example_extraction.py	/^    sense_def = row[2]$/;"	kind:variable	line:25
+sense_id	../KorFeatures\etc\cwn\cwn_example_extraction.py	/^    sense_id = row[0]$/;"	kind:variable	line:23
+sense_map	../KorFeatures\etc\cwn\cwn_sense_counter.py	/^    sense_map = {}$/;"	kind:variable	line:6
 setLowPerctFeatures	../KorFeatures\doc_feat.py	/^    def setLowPerctFeatures(self, field, rv):$/;"	kind:member	line:211
-setLowPerctFeatures	../KorFeatures\kor_features.py	/^    def setLowPerctFeatures(self, field, rv):$/;"	kind:member	line:210
+setLowPerctFeatures	../KorFeatures\kor_features.py	/^    def setLowPerctFeatures(self, field, rv):$/;"	kind:member	line:245
 setQuantileFeatures	../KorFeatures\doc_feat.py	/^    def setQuantileFeatures(self, field, rv):$/;"	kind:member	line:203
-setQuantileFeatures	../KorFeatures\kor_features.py	/^    def setQuantileFeatures(self, field, rv):$/;"	kind:member	line:202
+setQuantileFeatures	../KorFeatures\kor_features.py	/^    def setQuantileFeatures(self, field, rv):$/;"	kind:member	line:237
 setup	../setup.py	/^from setuptools import setup$/;"	kind:namespace	line:1
 setup.py	../setup.py	1;"	kind:file	line:1
 similarity	../KorFeatures\PTree.py	/^    def similarity(self, to):$/;"	kind:member	line:29
 size	../KorFeatures\PTree.py	/^    def size(self):$/;"	kind:member	line:14
+sqlite3	../KorFeatures\etc\cwn\cwn_example_extraction.py	/^import sqlite3$/;"	kind:namespace	line:1
+stroke_data.py	../KorFeatures\stroke_data.py	1;"	kind:file	line:1
+testDocInference	../KorFeatures\tests\test_topics.py	/^    def testDocInference(self):$/;"	kind:member	line:26
+testLexicalFeature	../KorFeatures\tests\test_lexical_matcher.py	/^    def testLexicalFeature(self):$/;"	kind:member	line:6
+testLexicalPatterns	../KorFeatures\tests\test_lexical_matcher.py	/^    def testLexicalPatterns(self):$/;"	kind:member	line:14
+testLexicalPatterns2	../KorFeatures\tests\test_lexical_matcher.py	/^    def testLexicalPatterns2(self):$/;"	kind:member	line:23
 testPreproc	../KorFeatures\tests\test_oceanus_data_preproc.py	/^    def testPreproc(self):$/;"	kind:member	line:7
-test_features	../KorFeatures\tests\test_features.py	/^    def test_features(self):$/;"	kind:member	line:10
+testTopic	../KorFeatures\tests\test_topics.py	/^    def testTopic(self):$/;"	kind:member	line:6
+test_features	../KorFeatures\tests\test_features.py	/^    def test_features(self):$/;"	kind:member	line:11
 test_features.py	../KorFeatures\tests\test_features.py	1;"	kind:file	line:1
-test_init	../KorFeatures\tests\test_features.py	/^    def test_init(self):        $/;"	kind:member	line:7
+test_init	../KorFeatures\tests\test_features.py	/^    def test_init(self):        $/;"	kind:member	line:8
+test_lexical_matcher.py	../KorFeatures\tests\test_lexical_matcher.py	1;"	kind:file	line:1
 test_oceanus_data_preproc.py	../KorFeatures\tests\test_oceanus_data_preproc.py	1;"	kind:file	line:1
-text_overlap	../KorFeatures\overlap_algo.py	/^    def text_overlap(self, seq_a, seq_b):$/;"	kind:member	line:9
+test_topics.py	../KorFeatures\tests\test_topics.py	1;"	kind:file	line:1
+text_overlap	../KorFeatures\overlap_algo.py	/^    def text_overlap(self, seq_a: List[TokenData], seq_b: List[TokenData]):$/;"	kind:member	line:11
+toJSON	../KorFeatures\KorTypes\kor_types.py	/^    def toJSON(self):$/;"	kind:member	line:21
+toJSON	../KorFeatures\KorTypes\kor_types.py	/^    def toJSON(self):$/;"	kind:member	line:39
 tokens	../KorFeatures\oceanus_data_preproc.py	/^    def tokens(self) -> List[TokenData]:$/;"	kind:member	line:18
+topicList	../KorFeatures\kor_features.py	/^    def topicList(self):$/;"	kind:member	line:53
+topics	../KorFeatures\kor_features.py	/^from . import topics$/;"	kind:namespace	line:12
+topics.py	../KorFeatures\topics.py	1;"	kind:file	line:1
 trees	../KorFeatures\oceanus_data_preproc.py	/^    def trees(self) -> List[PTree]:$/;"	kind:member	line:40
 unittest	../KorFeatures\tests\test_features.py	/^import unittest$/;"	kind:namespace	line:1
+unittest	../KorFeatures\tests\test_lexical_matcher.py	/^import unittest$/;"	kind:namespace	line:1
 unittest	../KorFeatures\tests\test_oceanus_data_preproc.py	/^import unittest$/;"	kind:namespace	line:2
+unittest	../KorFeatures\tests\test_topics.py	/^import unittest$/;"	kind:namespace	line:1
 url	../setup.py	/^      url='http:\/\/github.com\/seantyh\/KorFeatures',$/;"	kind:variable	line:6
 version	../setup.py	/^      version='0.1',$/;"	kind:variable	line:4
 zh_characters.py	../KorFeatures\zh_characters.py	1;"	kind:file	line:1
-zip_safe	../setup.py	/^      zip_safe=False)$/;"	kind:variable	line:11
+zip_safe	../setup.py	/^      zip_safe=False)$/;"	kind:variable	line:12
