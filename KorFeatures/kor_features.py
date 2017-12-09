@@ -123,14 +123,15 @@ class KorFeatures:
         self.feats["SynSim"] = sum(tree_sim)/len(tree_sim)        
         self.feats["nWordBeforeMV"] = 0
 
-        # words before main verb
+        # words before main verb        
         deps = self.deps             
         nwMV = []
         for seq_i, seq_dep in enumerate(deps):
-            main_verb = self.find_main_verb(seq_i, seq_dep, toks)
-            mv_pos = self.find_token_position_in_sentence(main_verb)
-            nwMV.append(mv_pos)        
-        nwMV = list(filter(lambda x: x>0, nwMV))
+            seq_tok = [x for x in toks if toks.sentenceIndex == seq_i]            
+            depStruct = DepTreeStructure(seq_dep, seq_tok)
+            mv_pos = depStruct.n_word_before_mv(depStruct)
+            nwMV.append(mv_pos)
+        nwMV = list(filter(lambda x: x>=0, nwMV))
 
         if (len(nwMV)) == 0: nwMV = [0]
         self.feats["nWordBeforeMV"] = sum(nwMV)/len(nwMV)        
@@ -249,26 +250,5 @@ class KorFeatures:
         except KeyError as ex:
             logging.getLogger().error("Cannot find %s" % ex)
 
-    def find_main_verb(self, sentenceIdx: int, seqDep: DepData, tokens) -> TokenData:
-        rootDep: DepData = [x for x in seqDep if x.relation == "root"]
-        if (len(rootDep) == 0): return None
-        
-        root_depi = int(rootDep[0].depIndex)
-        main_token = [x for i, x in enumerate(tokens) if i == root_depi]
-        if len(main_token) == 0:
-            return None
 
-        if main_token[0].pos.startswith("V"):
-            return main_token[0]
-        else:
-            return None
-
-    def find_token_position_in_sentence(self, token: TokenData) -> int:
-        if token is None:
-            return -1
-
-        sent_of_token = [token_x for token_x in self.tokens 
-                            if token_x.sentenceIndex == token.sentenceIndex]
-        pos_in_sentence = sent_of_token.index(token)
-        return pos_in_sentence
 
