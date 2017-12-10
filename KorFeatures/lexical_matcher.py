@@ -41,5 +41,25 @@ class LexicalMatcher:
             if to_break: break
 
         return n_occur
-            
 
+class LexicalFeatureData:
+    def __init__(self, feat_path):
+        with open(feat_path, "r", encoding="UTF-8") as fin:
+            self.feats = json.load(fin)
+        self.matcher = LexicalMatcher()
+    
+    def count_imperative_verb(self, inputs):
+        occ_map = self.matcher.match_features(inputs, feats["verb"]["使令動詞"])
+        return sum(occ_map.values())
+
+    def count_intentional_verb(self, inputs):
+        occ_map = self.matcher.match_features(inputs, feats["verb"]["能願助動詞"])
+        return sum(occ_map.values())
+    
+    def count_conn(self, inputs, conn_name):
+        occ_map = self.matcher.match_features(inputs, feats["conn"][conn_name])
+        return sum(occ_map.values())
+
+    def count_BiMarker(self, inputs):
+        occ_map = self.matcher.match_features(inputs, feats["BiMarker"])
+        return sum(occ_map.values())

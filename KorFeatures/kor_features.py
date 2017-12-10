@@ -3,6 +3,7 @@ from itertools import groupby
 import numpy as np
 from . import feature_template
 from .frequency_data import *
+from .stroke_data import StrokeData
 from .pos_class import PosClass
 from .overlap_algo import *
 from .zh_characters import *
@@ -55,9 +56,11 @@ class KorFeatures:
     
     def computeFeatures(self):
         self.computeSurface()
-        self.computeStructures()
+        self.computeWordInfo()
+        self.computeSyntactic()
+        self.computeConnectives()        
         self.computeCohesive()
-        self.computeTopics()
+        self.computeSemantics()
 
     def computeSurface(self):
         feats = self.feats
@@ -96,12 +99,78 @@ class KorFeatures:
         feats["WordRank_50K"] = wdnorm(sum((1 for x in word_rank_vec if x >= 2000 and x < 50000)))
         feats["WordRank_100K"] = wdnorm(sum((1 for x in word_rank_vec if x >= 50000 and x < 100000)))
 
+        # Stroke data
+        stk_data = StrokeData()
+        stk_vec = [stk_data.get(ch) for ch in chars]
+        self.setQuantileFeatures("CharStrokes", stk_vec)
+
         # Clause/sentence length
         clsLen = {i: len(list(seq)) for i, seq in groupby(real_tokens, lambda x: x.clauseIndex)}
         senLen = {i: len(list(seq)) for i, seq in groupby(real_tokens, lambda x: x.sentenceIndex)}
+
+        # POS data
+        pos_freq = {"N": 0, "V": 0, "A": 0, "PN": 0, "LB": 0, "SB": 0, "BA": 0}
+        for tok in real_tokens:
+            if tok.pos.startswith("N"):
+                pos_freq["N"] += 1
+            elif tok.pos.startswith("V"):
+                pos_freq["V"] += 1
+            elif tok.pos in ("JJ", "AD"):
+                pos_freq["A"] += 1
+            elif tok.pos == "PN":
+                pos_freq["PN"] += 1
+            elif tok.pos == "BA":
+                pos_freq["BA"] += 1
+            elif tok.pos in ("LB", "SB"):
+                pos_freq["BEI"] += 1
+
+        self.setCountFeatures("Noun", pos_freq["N"], self.n_real_tokens)
+        self.setCountFeatures("Verb", pos_freq["V"], self.n_real_tokens)
+        self.setCountFeatures("Adjective", pos_freq["A"], self.n_real_tokens)
+        self.setCountFeatures("Pronoun", pos_freq["PN"], self.n_real_tokens)
+        self.setCountFeatures("BaSentence", pos_freq["BA"], self.n_real_tokens)
+        self.setCountFeatures("BeiSentence", pos_freq["BEI"], self.n_real_tokens)
         
+        # Intention/Imperative
+        lexFeatData = LexicalFeatureData()
+        nImpVerb = lexFeatData.count_imperative_verb(real_tokens)
+        nIntVerb = lexFeatData.count_intentional_verb(real_tokens)
+        nBi = lexFeatDAta.count_BiMarker(real_tokens)
+        nConnAdd = lexFeatData.count_conn(real_tokens, "並列")
+        nConnTemp = lexFeatData.count_conn(real_tokens, "承接")
+        nConnPos = lexFeatData.count_conn(real_tokens, "遞進")
+        nConnSel = lexFeatData.count_conn(real_tokens, "選擇")
+        nConnNeg = lexFeatData.count_conn(real_tokens, "轉折")
+        nConnCausal = lexFeatData.count_conn(real_tokens, "因果")
+        nConnCond = lexFeatData.count_conn(real_tokens, "條件")
+        nConnHypo = lexFeatData.count_conn(real_tokens, "假設")
+        nConnGoal = lexFeatData.count_conn(real_tokens, "目的")
+        nConnExemplar = lexFeatData.count_conn(real_tokens, "解證")
+        nConn = sum([nConnAdd, nConnTemp, nConnPos, nConnSel, 
+                    nConnNeg, nConnCausal, nConnCond, nConnHypo, 
+                    nConnGoal, nConnExemplar])
+        self.setCountFeatures("ImperativeVerb", nImpVerb, self.n_real_tokens)
+        self.setCountFeatures("IntentionVerb", nIntVerb, self.n_real_tokens)
+        self.setCountFeatures("BiSentence", nBi, self.n_real_tokens)
+        self.setCountFeatures("ConnAdditive", nConnAdd, self.n_real_tokens)
+        self.setCountFeatures("ConnTemporal", nConnTemp, self.n_real_tokens)
+        self.setCountFeatures("ConnPositive", nConnPos, self.n_real_tokens)
+        self.setCountFeatures("ConnSelection", nConnSel, self.n_real_tokens)
+        self.setCountFeatures("ConnNegative", nConnNeg, self.n_real_tokens)
+        self.setCountFeatures("ConnCausal", nConnCausal, self.n_real_tokens)
+        self.setCountFeatures("ConnConditional", nConnCond, self.n_real_tokens)
+        self.setCountFeatures("ConnHypothesis", nConnHypo, self.n_real_tokens)
+        self.setCountFeatures("ConnGoal", nConnGoal, self.n_real_tokens)
+        self.setCountFeatures("ConnExemplar", nConnExemplar, self.n_real_tokens)
+        self.setCountFeatures("Conn", nConn, self.n_real_tokens)
+                
+        
+        feats["nClause"] = len(clsLen)
+        feats["nSentence"] = len(senLen)
         self.setQuantileFeatures("ClsLen", list(clsLen.values()))
         self.setQuantileFeatures("SenLen", list(senLen.values()))        
+
+        self.n_real_tokens = len(real_tokens)
 
     def computeStructures(self):
         # Functional / Content
@@ -109,9 +178,6 @@ class KorFeatures:
         nFunc = len(list(filter(lambda x: x.pos in FUNC_POS_LIST, toks)))
         nCont = len(list(filter(lambda x: x.pos in CONT_POS_LIST, toks)))
         self.feats["rFuncCont"] = nFunc/nCont        
-
- 
-
 
         # Tree depths
         trees = self.trees
@@ -157,16 +223,6 @@ class KorFeatures:
 
     def computeCohesive(self):
         toks = self.tokens
-
-        # number of connective
-        nConn = len(list(filter(lambda x: x.pos in CONN_POS_LIST, toks)))
-        self.feats["nConn"] = nConn
-
-        # number of Pronoun and Noun
-        nNoun = len(list(filter(lambda x: x.pos.startswith("N"), toks)))
-        nPronoun = len(list(filter(lambda x: x.pos == "PN", toks)))
-        rPronNoun = nPronoun / nNoun
-        self.feats["rPronNoun"] = rPronNoun
 
         # type/token ratio
         uniq_type = set(x.text for x in self.tokens)
@@ -228,31 +284,7 @@ class KorFeatures:
         
         self.feats["SemanticOverlap_Local"] = mean(emb_overlap_local_vec)
         self.feats["SemanticOverlap_Given"] = mean(emb_overlap_given_vec)
-        
-    def computeTopics(self):
-        # topic_query = TopicQuery()
-        if self.skipTopic:
-            return
-
-        if not topics.test_topics_endpoint():
-            return
-        
-        words = [x.text for x in self.tokens]
-        topics_data = topics.get_topics(words)
-        # topic_ids = topic_query.query_top_topics(self.name)
-        # topic_ps = topic_query.query_top_probs(self.name)
-        if topics_data is None: return
-        topic_ids = topics_data["topic"]
-        self.feats["FirstTopic"] = topic_ids[0]
-        self.feats["SecondTopic"] = topic_ids[1]
-        self.feats["ThirdTopic"] = topic_ids[2]
-
-        topic_probs = topics_data["p"]
-        prob5 = np.array(topic_probs[:5])
-        self.feats["Top5CumuProp"] = np.sum(prob5)
-
-        prob5x = np.concatenate([prob5, [1-np.sum(prob5)]])
-        self.feats["Top5Entropy"] = - np.sum(prob5x * np.log(prob5x))        
+             
 
     def setQuantileFeatures(self, field, rv):
         try:
@@ -268,6 +300,14 @@ class KorFeatures:
             self.feats[field + "_Q01"] = np.percentile(rv, 1)
         except KeyError as ex:
             logging.getLogger().error("Cannot find %s" % ex)
+    
+    def setCountFeatures(self, field, val, Z):
+        try:
+            self.feats["n" + field] = val
+            self.feats["r" + field] = val / Z
+        except KeyError as ex:
+            logging.getLogger().error("Cannot find %s" % ex)
+    
 
 
 
