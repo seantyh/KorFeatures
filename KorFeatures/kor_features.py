@@ -108,7 +108,10 @@ class KorFeatures:
         toks = self.tokens
         nFunc = len(list(filter(lambda x: x.pos in FUNC_POS_LIST, toks)))
         nCont = len(list(filter(lambda x: x.pos in CONT_POS_LIST, toks)))
-        self.feats["rFuncCont"] = nFunc/nCont
+        self.feats["rFuncCont"] = nFunc/nCont        
+
+ 
+
 
         # Tree depths
         trees = self.trees
@@ -120,21 +123,37 @@ class KorFeatures:
         for t1, t2 in zip(trees, trees[1:]):
             tree_sim.append(t1.similarity(t2))
         if (len(tree_sim)) == 0: tree_sim = [0]
-        self.feats["SynSim"] = sum(tree_sim)/len(tree_sim)        
-        self.feats["nWordBeforeMV"] = 0
+        self.feats["SynSim"] = sum(tree_sim)/len(tree_sim)                
 
-        # words before main verb        
+        # Dep-Tree features
+        ## words before main verb        
         deps = self.deps             
-        nwMV = []
+        nwMV_vec = []
+        depths_vec = []
+        nModNP_vec = []
         for seq_i, seq_dep in enumerate(deps):
             seq_tok = [x for x in toks if toks.sentenceIndex == seq_i]            
             depStruct = DepTreeStructure(seq_dep, seq_tok)
-            mv_pos = depStruct.n_word_before_mv(depStruct)
-            nwMV.append(mv_pos)
-        nwMV = list(filter(lambda x: x>=0, nwMV))
 
-        if (len(nwMV)) == 0: nwMV = [0]
-        self.feats["nWordBeforeMV"] = sum(nwMV)/len(nwMV)        
+            # number of words before main verb
+            mv_pos = depStruct.n_word_before_mv()
+            nwMV.append(mv_pos)
+
+            # maximum number of modifiers per noun
+            nModNP = 0
+            for toki, tok in enumerate(tokens):                
+                if tok.pos.startswith("N"):
+                    nModNP_x = depStruct.get_dependents(toki)
+                    if nModNP < nModNP_x: nModNP = nModNP_x
+            nModNP_vec.append(nModNP)
+
+            # proposition depth
+            depth_x = depStruct.get_depth()
+            depths_vec.append(depth_x)
+            
+        self.feats["nWordBeforeMV"] = sum(nwMV_vec)/len(nwMV_vec) 
+        self.feats["nModifierNP"] = sum(nModNP_vec)/len(nModNP_vec)
+        self.feats["PropDepth"] = sum(depths_vec)/len(depths_vec)
 
     def computeCohesive(self):
         toks = self.tokens

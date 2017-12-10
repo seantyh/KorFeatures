@@ -27,6 +27,17 @@ class DepTreeStructureTest(unittest.TestCase):
         print(dts.get_depth())
         print(odp.deps())
 
+    def testNounDependents(self):
+        od = self.load_test_data()
+        odp = OceanusDataPreproc(od)
+        deps = odp.deps()
+        tokens = odp.tokens()
+        dts = DepTreeStructure(deps[0], tokens)
+        print("-- Test noun dependents --")
+        for toki, tok in enumerate(tokens):
+            if tok.pos.startswith("N"):
+                print(tok, dts.get_dependents(toki))
+
     def testnWordMV(self):                
         od = self.load_test_data()
         odp = OceanusDataPreproc(od)

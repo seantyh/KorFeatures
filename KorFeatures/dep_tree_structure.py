@@ -22,23 +22,53 @@ class DepTreeStructure:
         self.root_index = root_idx
         self.dep_map = dep_map
 
-    def get_depth(self):                
-        root_depth = self.get_node_depth(self.root_index, self.dep_map)
-        return root_depth
+    def get_depth(self, node_index=-1): 
+        if node_index < 0:
+            root_depth = self.get_node_depth(self.root_index, self.dep_map)
+            return root_depth
+        else:
+            if node_index < 0 and node_index >= len(self.tokens):
+                raise ValueError("invalid node_index")
+
+            node_depth = self.get_node_depth(node_index, self.dep_map)
+            return node_depth
     
     def get_node_depth(self, token_idx, dep_map):
         if token_idx in dep_map:            
             max_depth = 0
             for dep_i in dep_map[token_idx]:                
                 depth_x = self.get_node_depth(dep_i, dep_map) + 1
-                print("from %s-%d: [depth: %d] %s" %  
-                    (self.tokens[token_idx], token_idx, 
-                    depth_x, self.tokens[dep_i]))
+
+                # debug-used print
+                # print("from %s-%d: [depth: %d] %s" %  
+                #    (self.tokens[token_idx], token_idx, 
+                #    depth_x, self.tokens[dep_i]))
+                
                 if max_depth < depth_x: max_depth = depth_x
             return max_depth
         else:
             return 0
 
+    def get_dependents(self, node_index):
+        if node_index < 0 and node_index >= len(self.tokens):
+                raise ValueError("invalid node_index")
+
+        node_ndep = self.get_node_dependents(node_index, self.dep_map)
+        return node_ndep
+
+    def get_node_dependents(self, token_idx, dep_map):
+        if token_idx in dep_map:            
+            n_dep = 0
+            for dep_i in dep_map[token_idx]:                
+                n_dep += self.get_node_dependents(dep_i, dep_map) + 1              
+                # debug-used print
+                # print("from %s-%d: [ndep: %d] %s" %  
+                #      (self.tokens[token_idx], token_idx, 
+                #      n_dep, self.tokens[dep_i]))
+                
+            return n_dep
+        else:
+            return 0
 
     def n_word_before_mv(self):
         deps = self.deps   
