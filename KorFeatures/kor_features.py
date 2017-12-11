@@ -1,10 +1,15 @@
 from typing import Text, List, Any, Dict
 from itertools import groupby
+from os.path import abspath, dirname, join
 import numpy as np
 from . import feature_template
 from .frequency_data import *
 from .stroke_data import StrokeData
+from .lexical_matcher import LexicalFeatureData
+from .sense_data import SenseData
 from .pos_class import PosClass
+from .dep_tree_structure import DepTreeStructure
+from .topics import TopicModel
 from .overlap_algo import *
 from .zh_characters import *
 from .KorTypes import *
@@ -12,6 +17,8 @@ from .PTree import PTree
 from .oceanus_data_preproc import OceanusDataPreproc
 from . import topics
 import pdb
+
+CURDIR = abspath(dirname(__file__))
 
 FUNC_POS_LIST = PosClass().get_functional_class()
 CONT_POS_LIST = PosClass().get_content_class()
@@ -54,13 +61,12 @@ class KorFeatures:
     def topicList(self):
         return topics.TOPIC_LIST
     
-    def computeFeatures(self):
+    def computeFeatures(self): 
+        # note: self.n_real_tokens is required for various computation
+        # it is assigned in computeSurface(), make sure it executes first
         self.computeSurface()
-        self.computeWordInfo()
-        self.computeSyntactic()
-        self.computeConnectives()        
-        self.computeCohesive()
-        self.computeSemantics()
+        self.computeStructures()        
+        self.computeCohesive()        
 
     def computeSurface(self):
         feats = self.feats
@@ -70,11 +76,16 @@ class KorFeatures:
                         not x.pos.startswith("PU"), toks))
         real_tokens = filter(lambda x: isZhChars(x.text), real_tokens)                        
         real_tokens = list(real_tokens)
+        self.n_real_tokens = len(real_tokens)
+
+
         chars = "".join([x.text for x in real_tokens])
         nChar = len(chars)        
         nWord = len(real_tokens)
+        wlen_vec = [len(x.text) for x in real_tokens]
         feats["nChar"] = int(nChar)
-        feats["nWord"] = int(nWord)
+        feats["nWord"] = int(nWord)        
+        self.setQuantileFeatures("WordLen", wlen_vec)
         
         # Frequency data      
         char_freq_vec = [CharFreqData.get(x) for x in chars]
@@ -109,7 +120,7 @@ class KorFeatures:
         senLen = {i: len(list(seq)) for i, seq in groupby(real_tokens, lambda x: x.sentenceIndex)}
 
         # POS data
-        pos_freq = {"N": 0, "V": 0, "A": 0, "PN": 0, "LB": 0, "SB": 0, "BA": 0}
+        pos_freq = {"N": 0, "V": 0, "A": 0, "PN": 0, "BA": 0, "BEI": 0}
         for tok in real_tokens:
             if tok.pos.startswith("N"):
                 pos_freq["N"] += 1
@@ -130,22 +141,27 @@ class KorFeatures:
         self.setCountFeatures("Pronoun", pos_freq["PN"], self.n_real_tokens)
         self.setCountFeatures("BaSentence", pos_freq["BA"], self.n_real_tokens)
         self.setCountFeatures("BeiSentence", pos_freq["BEI"], self.n_real_tokens)
-        
+        if pos_freq["N"]:
+            self.feats["rPronounNoun"] = pos_freq["PN"] / pos_freq["N"]        
+
         # Intention/Imperative
-        lexFeatData = LexicalFeatureData()
-        nImpVerb = lexFeatData.count_imperative_verb(real_tokens)
-        nIntVerb = lexFeatData.count_intentional_verb(real_tokens)
-        nBi = lexFeatDAta.count_BiMarker(real_tokens)
-        nConnAdd = lexFeatData.count_conn(real_tokens, "並列")
-        nConnTemp = lexFeatData.count_conn(real_tokens, "承接")
-        nConnPos = lexFeatData.count_conn(real_tokens, "遞進")
-        nConnSel = lexFeatData.count_conn(real_tokens, "選擇")
-        nConnNeg = lexFeatData.count_conn(real_tokens, "轉折")
-        nConnCausal = lexFeatData.count_conn(real_tokens, "因果")
-        nConnCond = lexFeatData.count_conn(real_tokens, "條件")
-        nConnHypo = lexFeatData.count_conn(real_tokens, "假設")
-        nConnGoal = lexFeatData.count_conn(real_tokens, "目的")
-        nConnExemplar = lexFeatData.count_conn(real_tokens, "解證")
+        DATA_PATH = join(CURDIR, "etc")
+        lexFeatData = LexicalFeatureData(join(DATA_PATH, "verb_category.json"))
+        word_list = [x.text for x in real_tokens]
+        
+        nImpVerb = lexFeatData.count_imperative_verb(word_list)
+        nIntVerb = lexFeatData.count_intentional_verb(word_list)
+        nBi = lexFeatData.count_BiMarker(word_list)
+        nConnAdd = lexFeatData.count_conn(word_list, "並列")
+        nConnTemp = lexFeatData.count_conn(word_list, "承接")
+        nConnPos = lexFeatData.count_conn(word_list, "遞進")
+        nConnSel = lexFeatData.count_conn(word_list, "選擇")
+        nConnNeg = lexFeatData.count_conn(word_list, "轉折")
+        nConnCausal = lexFeatData.count_conn(word_list, "因果")
+        nConnCond = lexFeatData.count_conn(word_list, "條件")
+        nConnHypo = lexFeatData.count_conn(word_list, "假設")
+        nConnGoal = lexFeatData.count_conn(word_list, "目的")
+        nConnExemplar = lexFeatData.count_conn(word_list, "解證")
         nConn = sum([nConnAdd, nConnTemp, nConnPos, nConnSel, 
                     nConnNeg, nConnCausal, nConnCond, nConnHypo, 
                     nConnGoal, nConnExemplar])
@@ -169,22 +185,14 @@ class KorFeatures:
         feats["nSentence"] = len(senLen)
         self.setQuantileFeatures("ClsLen", list(clsLen.values()))
         self.setQuantileFeatures("SenLen", list(senLen.values()))        
-
-        self.n_real_tokens = len(real_tokens)
+        
 
     def computeStructures(self):
         # Functional / Content
-        toks = self.tokens
-        nFunc = len(list(filter(lambda x: x.pos in FUNC_POS_LIST, toks)))
-        nCont = len(list(filter(lambda x: x.pos in CONT_POS_LIST, toks)))
-        self.feats["rFuncCont"] = nFunc/nCont        
-
-        # Tree depths
-        trees = self.trees
-        props_depth = [tree_x.depth() for tree_x in trees]
-        self.setQuantileFeatures("PropDepth", props_depth)
+        toks = self.tokens            
 
         # Tree similarity of ajacent pairs
+        trees = self.trees
         tree_sim = []
         for t1, t2 in zip(trees, trees[1:]):
             tree_sim.append(t1.similarity(t2))
@@ -198,16 +206,16 @@ class KorFeatures:
         depths_vec = []
         nModNP_vec = []
         for seq_i, seq_dep in enumerate(deps):
-            seq_tok = [x for x in toks if toks.sentenceIndex == seq_i]            
+            seq_tok = [x for x in toks if x.sentenceIndex == seq_i]            
             depStruct = DepTreeStructure(seq_dep, seq_tok)
 
             # number of words before main verb
             mv_pos = depStruct.n_word_before_mv()
-            nwMV.append(mv_pos)
+            nwMV_vec.append(mv_pos)
 
             # maximum number of modifiers per noun
             nModNP = 0
-            for toki, tok in enumerate(tokens):                
+            for toki, tok in enumerate(toks):                
                 if tok.pos.startswith("N"):
                     nModNP_x = depStruct.get_dependents(toki)
                     if nModNP < nModNP_x: nModNP = nModNP_x
@@ -221,6 +229,14 @@ class KorFeatures:
         self.feats["nModifierNP"] = sum(nModNP_vec)/len(nModNP_vec)
         self.feats["PropDepth"] = sum(depths_vec)/len(depths_vec)
 
+        # count of Noun/Verb/Preposition phrase
+        nNP = sum([tree_x.find_node("NP") for tree_x in trees])
+        nVP = sum([tree_x.find_node("VP") for tree_x in trees])
+        nPP = sum([tree_x.find_node("PP") for tree_x in trees])
+        self.setCountFeatures("NP", nNP, self.n_real_tokens)
+        self.setCountFeatures("VP", nVP, self.n_real_tokens)
+        self.setCountFeatures("PP", nPP, self.n_real_tokens)
+
     def computeCohesive(self):
         toks = self.tokens
 
@@ -233,8 +249,13 @@ class KorFeatures:
         seq_list = list(range(max(x.sentenceIndex for x in toks)+1))
         noun_toks = list(filter(lambda x: x.pos.startswith("N"), toks))
         cont_toks = list(filter(lambda x: x.pos in CONT_POS_LIST, toks))
+        func_toks = list(filter(lambda x: x.pos in FUNC_POS_LIST, toks))
         get_seq_tok = lambda tok_list, seqi: [x for x in tok_list if x.sentenceIndex == seqi]
         get_prev_seq_tok = lambda tok_list, seqi: [x for x in tok_list if x.sentenceIndex < seqi]
+        
+        self.feats["rContent"] = len(cont_toks) / self.n_real_tokens
+        if func_toks:
+            self.feats["rContentFunction"] = len(cont_toks) / len(func_toks)        
 
         noun_overlap_local_vec = []
         cont_overlap_local_vec = []
@@ -267,24 +288,40 @@ class KorFeatures:
         self.feats["NounOverlap_Given"] = mean(noun_overlap_given_vec)
         self.feats["ContentOverlap_Given"] = mean(cont_overlap_given_vec)
 
-        # Embedding overlap
-        emb_overlap_local_vec = []
-        emb_overlap_given_vec = []
-        embOverlap = EmbeddingOverlap()
-        for (seq1, seq2) in zip(seq_list, seq_list[1:]):            
-            emb_overlap_local_vec.append(embOverlap.embed_overlap(
-                get_seq_tok(toks, seq1),
-                get_seq_tok(toks, seq2),
-            ))
+        # Semantic overlap        
+        DATA_PATH = join(CURDIR, "etc/tm")
+        MODEL_PATH = join(DATA_PATH, "asbc5_200_gensim_pass20.model")
+        DICT_PATH = join(DATA_PATH, "gensim_asbc.dict")
+        topic_model = TopicModel(MODEL_PATH, DICT_PATH)
 
-            emb_overlap_given_vec.append(embOverlap.embed_overlap(
-                get_seq_tok(toks, seq1),
-                get_prev_seq_tok(toks, seq2),
-            ))
+        wassoc_local_vec = []
+        wassoc_given_vec = []
+        for (seq1, seq2) in zip(seq_list, seq_list[1:]):  
+            tokseq2 = get_seq_tok(toks, seq2)
+            tokseq1 = get_seq_tok(toks, seq1)
+            tokgiven = get_prev_seq_tok(toks, seq2)
+            
+            local_vec = topic_model.get_word_assoc(
+                [x.text for x in tokseq2], 
+                [x.text for x in tokseq1])
+
+            given_vec = topic_model.get_word_assoc(
+                [x.text for x in tokseq2], 
+                [x.text for x in tokgiven])
+
+            if len(local_vec) > 0:
+                wassoc_local_vec.append(np.max(local_vec))
+            if len(given_vec) > 0:
+                wassoc_given_vec.append(np.max(given_vec))
         
-        self.feats["SemanticOverlap_Local"] = mean(emb_overlap_local_vec)
-        self.feats["SemanticOverlap_Given"] = mean(emb_overlap_given_vec)
-             
+        self.feats["SemanticOverlap_Local"] = mean(wassoc_local_vec)
+        self.feats["SemanticOverlap_Given"] = mean(wassoc_given_vec)
+        
+        # sense count
+        SENSE_PATH = join(CURDIR, "etc/cwn/cwn_sense_count.txt")
+        sense_data = SenseData(SENSE_PATH)
+        nsense_vec = [sense_data.get(wd) for wd in cont_toks]
+        self.setQuantileFeatures("nSense", nsense_vec)
 
     def setQuantileFeatures(self, field, rv):
         try:

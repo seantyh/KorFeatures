@@ -1,5 +1,5 @@
 from collections import OrderedDict
-
+import pdb
 def make_features():
     fields = [
         # --- surface ---
@@ -8,8 +8,8 @@ def make_features():
         ("nClause", 0),
         ("nSentence", 0),
         ("WordLen_Q25", 0),
-        ("WordLen_Q25", 0),
         ("WordLen_Q50", 0),
+        ("WordLen_Q75", 0),
         ("ClsLen_Q25", 0), 
         ("ClsLen_Q50", 0), 
         ("ClsLen_Q75", 0), 
@@ -41,18 +41,17 @@ def make_features():
         ("WordRank_100K", 0),
         ("nNoun", 0), ("rNoun", 0.0), 
         ("nVerb", 0), ("rVerb", 0.0), 
-        ("nAdjective", 0), ("rAdjectuve", 0.0), 
+        ("nAdjective", 0), ("rAdjective", 0.0), 
         ("nPronoun", 0), ("rPronoun", 0.0), 
         ("nIntentionVerb", 0), ("rIntentionVerb", 0.0), 
         ("nImperativeVerb", 0), ("rImperativeVerb", 0.0), 
         ("rTypeToken", 0.0),
-        ("rContent") 
+        ("rContent", 0.0),
         ("rContentFunction", 0.0), 
+        ("rPronounNoun", 0.0),
         
         # --- Syntactic ---
-        ("PropDepth_Q25", 0), 
-        ("PropDepth_Q50", 0), 
-        ("PropDepth_Q75", 0),         
+        ("PropDepth", 0), 
         ("SynSim", 0.0), 
         ("nWordBeforeMV", 0.0), 
         ("nModNoun", 0.0),
@@ -67,7 +66,7 @@ def make_features():
         ("nConnAdditive", 0), ("rConnAdditive", 0.0),
         ("nConnTemporal", 0), ("rConnTemporal", 0.0),
         ("nConnPositive", 0), ("rConnPositive", 0.0),
-        ("nConnSelection", 0), ("rConnSeleciton", 0.0),
+        ("nConnSelection", 0), ("rConnSelection", 0.0),
         ("nConnNegative", 0), ("rConnNegative", 0.0),
         ("nConnCausal", 0), ("rConnCausal", 0.0),
         ("nConnConditional", 0), ("rConnConditional", 0.0),
@@ -86,8 +85,9 @@ def make_features():
         ("nSense_Q50", 0.0), 
         ("nSense_Q75", 0.0), 
         ("SemanticOverlap_Local", 0), 
-        ("SemanticOverlap_Given", 0),                
+        ("SemanticOverlap_Given", 0)                
     ]
+    
     return OrderedDict(fields)
 
 

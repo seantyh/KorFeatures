@@ -5,10 +5,9 @@ from scipy.special import logsumexp
 from gensim import models, corpora
 
 class TopicModel:
-    def __init__(self, model_path, dict_path):        
+    def __init__(self, model_path, dict_path):                
         self.model = models.LdaMulticore.load(model_path)
-        self.dictionary = corpora.Dictionary.load(dict_path)
-        self.cache_topic_heads()
+        self.dictionary = corpora.Dictionary.load(dict_path)                        
 
     def get_word_topic_prob(self, word, theta = None):
         model = self.model
@@ -75,12 +74,13 @@ class TopicModel:
                             - K_words_x    
         return np.exp(logp_vec)
 
-    def cache_topic_heads(self):
+    def load_topic_heads(self):
         topic_heads = []
         for i in range(self.model.num_topics):            
             topic_heads.append(str(
                 [self.dictionary[x[0]] for x in self.model.get_topic_terms(i, 5)]))
         self.topic_heads = topic_heads
+        return topic_heads
 
     def print_topic(self, topic_probs):
         if isinstance(topic_probs, int):

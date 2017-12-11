@@ -31,11 +31,11 @@ class TestFeatures(TestCase):
         self.assertTrue(feats['WordLen_Q25'] > 0)
         self.assertTrue(feats['ClsLen_Q25'] > 0)
         self.assertTrue(feats['SenLen_Q25'] > 0)
-        self.assertTrue(feats['PropDepth_Q25'] > 0)
+        self.assertTrue(feats['PropDepth'] > 0)
         self.assertTrue(feats['SynSim'] > 0)
         self.assertTrue(feats['nWordBeforeMV'] > 0)
         self.assertTrue(feats['nConn'] > 0)
-        self.assertTrue(feats['rPronNoun'] > 0)
+        self.assertTrue(feats['rPronounNoun'] > 0)
         self.assertTrue(feats['NounOverlap_Local'] > 0)
         self.assertTrue(feats['SemanticOverlap_Local'] > 0)                
         
