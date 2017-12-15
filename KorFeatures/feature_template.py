@@ -54,7 +54,7 @@ def make_features():
         ("PropDepth", 0), 
         ("SynSim", 0.0), 
         ("nWordBeforeMV", 0.0), 
-        ("nModNoun", 0.0),
+        ("nModifierNP", 0.0),
         ("nNP", 0), ("rNP", 0.0),
         ("nVP", 0), ("rVP", 0.0),
         ("nPP", 0), ("rPP", 0.0),
