@@ -310,9 +310,9 @@ class KorFeatures:
                 [x.text for x in tokgiven])
 
             if len(local_vec) > 0:
-                wassoc_local_vec.append(np.max(local_vec))
+                wassoc_local_vec.append(np.mean(local_vec))
             if len(given_vec) > 0:
-                wassoc_given_vec.append(np.max(given_vec))
+                wassoc_given_vec.append(np.mean(given_vec))
         
         self.feats["SemanticOverlap_Local"] = mean(wassoc_local_vec)
         self.feats["SemanticOverlap_Given"] = mean(wassoc_given_vec)
