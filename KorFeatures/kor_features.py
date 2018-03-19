@@ -320,7 +320,7 @@ class KorFeatures:
         # sense count
         SENSE_PATH = join(CURDIR, "etc/cwn/cwn_sense_count.txt")
         sense_data = SenseData(SENSE_PATH)
-        nsense_vec = [sense_data.get(wd) for wd in cont_toks]
+        nsense_vec = [sense_data.get(tok.text) for tok in cont_toks]
         self.setQuantileFeatures("nSense", nsense_vec)
 
     def setQuantileFeatures(self, field, rv):
