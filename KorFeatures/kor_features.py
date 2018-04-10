@@ -51,6 +51,7 @@ class KorFeatures:
         self.trees = trees
         self.deps = deps
         self.skipTopic = skipTopic
+        self.debugData = {}
 
         self.feats = feature_template.make_features()        
         self.computeFeatures()
@@ -60,7 +61,10 @@ class KorFeatures:
 
     def topicList(self):
         return topics.TOPIC_LIST
-    
+
+    def debug_data(self):
+        return self.debugData
+
     def computeFeatures(self): 
         # note: self.n_real_tokens is required for various computation
         # it is assigned in computeSurface(), make sure it executes first
@@ -77,7 +81,7 @@ class KorFeatures:
         real_tokens = filter(lambda x: isZhChars(x.text), real_tokens)                        
         real_tokens = list(real_tokens)
         self.n_real_tokens = len(real_tokens)
-
+        self.debugData["real_tokens"] = [x.toJSON() for x in real_tokens]
 
         chars = "".join([x.text for x in real_tokens])
         nChar = len(chars)        
@@ -94,10 +98,15 @@ class KorFeatures:
         self.setQuantileFeatures("WordFreq", word_freq_vec)
         self.setLowPerctFeatures("CharFreq", char_freq_vec)
         self.setLowPerctFeatures("WordFreq", word_freq_vec)
+        self.debugData["char_freq_vec"] = char_freq_vec
+        self.debugData["word_freq_vec"] = word_freq_vec
 
         # Rank data
         char_rank_vec = [CharFreqData.get_rank(x) for x in chars]
         word_rank_vec = [WordFreqData.get_rank(x.text) for x in real_tokens]
+        self.debugData["char_rank_vec"] = char_rank_vec
+        self.debugData["word_rank_vec"] = word_rank_vec
+
         chnorm = lambda x: x / len(chars)
         feats["CharRank_800"] = chnorm(sum((1 for x in char_rank_vec if x < 800)))
         feats["CharRank_1500"] = chnorm(sum((1 for x in char_rank_vec if x >= 800 and x < 1500)))
@@ -114,10 +123,14 @@ class KorFeatures:
         stk_data = StrokeData()
         stk_vec = [stk_data.get(ch) for ch in chars]
         self.setQuantileFeatures("CharStrokes", stk_vec)
+        self.debugData["stroke_vec"] = stk_vec
 
         # Clause/sentence length
         clsLen = {i: len(list(seq)) for i, seq in groupby(real_tokens, lambda x: x.clauseIndex)}
         senLen = {i: len(list(seq)) for i, seq in groupby(real_tokens, lambda x: x.sentenceIndex)}
+
+        self.debugData["cls_len"] = clsLen
+        self.debugData["sen_len"] = senLen
 
         # POS data
         pos_freq = {"N": 0, "V": 0, "A": 0, "PN": 0, "BA": 0, "BEI": 0}
@@ -224,6 +237,10 @@ class KorFeatures:
             # proposition depth
             depth_x = depStruct.get_depth()
             depths_vec.append(depth_x)
+
+        self.debugData["nModNP_vec"] = nModNP_vec
+        self.debugData["nwMV_vec"] = nwMV_vec
+        self.debugData["depths_vec"] = depths_vec
             
         self.feats["nWordBeforeMV"] = sum(nwMV_vec)/len(nwMV_vec) 
         self.feats["nModifierNP"] = sum(nModNP_vec)/len(nModNP_vec)
@@ -287,6 +304,11 @@ class KorFeatures:
         self.feats["ContentOverlap_Local"] = mean(cont_overlap_local_vec)
         self.feats["NounOverlap_Given"] = mean(noun_overlap_given_vec)
         self.feats["ContentOverlap_Given"] = mean(cont_overlap_given_vec)
+        
+        self.debugData["noun_overlap_local_vec"] = noun_overlap_local_vec
+        self.debugData["noun_overlap_given_vec"] = noun_overlap_given_vec
+        self.debugData["cont_overlap_local_vec"] = cont_overlap_local_vec
+        self.debugData["cont_overlap_given_vec"] = cont_overlap_given_vec
 
         # Semantic overlap        
         DATA_PATH = join(CURDIR, "etc/tm")
@@ -317,6 +339,8 @@ class KorFeatures:
         self.feats["SemanticOverlap_Local"] = mean(wassoc_local_vec)
         self.feats["SemanticOverlap_Given"] = mean(wassoc_given_vec)
         
+        self.debugData["wassoc_local_vec"] = wassoc_local_vec
+        self.debugData["wassoc_given_vec"] = wassoc_given_vec
         # sense count
         SENSE_PATH = join(CURDIR, "etc/cwn/cwn_sense_count.txt")
         sense_data = SenseData(SENSE_PATH)
