@@ -90,6 +90,7 @@ class KorFeatures:
         feats["nChar"] = int(nChar)
         feats["nWord"] = int(nWord)        
         self.setQuantileFeatures("WordLen", wlen_vec)
+        self.debugData["word_len"] = wlen_vec
         
         # Frequency data      
         char_freq_vec = [CharFreqData.get(x) for x in chars]
@@ -128,9 +129,19 @@ class KorFeatures:
         # Clause/sentence length
         clsLen = {i: len(list(seq)) for i, seq in groupby(real_tokens, lambda x: x.clauseIndex)}
         senLen = {i: len(list(seq)) for i, seq in groupby(real_tokens, lambda x: x.sentenceIndex)}
-
-        self.debugData["cls_len"] = clsLen
-        self.debugData["sen_len"] = senLen
+    
+        # this part is for generating clause length vector nested in sentences
+        clsLen_tup_group = groupby(real_tokens, lambda x: (x.sentenceIndex, x.clauseIndex))
+        clsLen_tup = {}
+        for idx_tup, tok_vec in clsLen_tup_group:
+            cls_len_x = len(list(tok_vec))
+            cls_sen_idx = idx_tup[0]
+            clsLen_sen = clsLen_tup.get(cls_sen_idx, [])
+            clsLen_sen.append(cls_len_x)
+            clsLen_tup[cls_sen_idx] = clsLen_sen
+        
+        self.debugData["clsInSen_len"] = [mean(clsLen_tup[idx]) for idx in sorted(clsLen_tup.keys())]
+        self.debugData["sen_len"] = [senLen[idx] for idx in sorted(senLen.keys())]
 
         # POS data
         pos_freq = {"N": 0, "V": 0, "A": 0, "PN": 0, "BA": 0, "BEI": 0}
@@ -211,6 +222,7 @@ class KorFeatures:
             tree_sim.append(t1.similarity(t2))
         if (len(tree_sim)) == 0: tree_sim = [0]
         self.feats["SynSim"] = sum(tree_sim)/len(tree_sim)                
+        self.debugData["syn_sim_vec"] = [-1] + tree_sim
 
         # Dep-Tree features
         ## words before main verb        
@@ -264,6 +276,7 @@ class KorFeatures:
 
         # Overlapping, adjacent(local) and given/new
         seq_list = list(range(max(x.sentenceIndex for x in toks)+1))
+        real_tokens = list(filter(lambda x: not x.pos.startswith("PU"), toks))
         noun_toks = list(filter(lambda x: x.pos.startswith("N"), toks))
         cont_toks = list(filter(lambda x: x.pos in CONT_POS_LIST, toks))
         func_toks = list(filter(lambda x: x.pos in FUNC_POS_LIST, toks))
@@ -305,10 +318,10 @@ class KorFeatures:
         self.feats["NounOverlap_Given"] = mean(noun_overlap_given_vec)
         self.feats["ContentOverlap_Given"] = mean(cont_overlap_given_vec)
         
-        self.debugData["noun_overlap_local_vec"] = noun_overlap_local_vec
-        self.debugData["noun_overlap_given_vec"] = noun_overlap_given_vec
-        self.debugData["cont_overlap_local_vec"] = cont_overlap_local_vec
-        self.debugData["cont_overlap_given_vec"] = cont_overlap_given_vec
+        self.debugData["noun_overlap_local_vec"] = [-1] + noun_overlap_local_vec
+        self.debugData["noun_overlap_given_vec"] = [-1] + noun_overlap_given_vec
+        self.debugData["cont_overlap_local_vec"] = [-1] + cont_overlap_local_vec
+        self.debugData["cont_overlap_given_vec"] = [-1] + cont_overlap_given_vec
 
         # Semantic overlap        
         DATA_PATH = join(CURDIR, "etc/tm")
@@ -339,13 +352,28 @@ class KorFeatures:
         self.feats["SemanticOverlap_Local"] = mean(wassoc_local_vec)
         self.feats["SemanticOverlap_Given"] = mean(wassoc_given_vec)
         
-        self.debugData["wassoc_local_vec"] = wassoc_local_vec
-        self.debugData["wassoc_given_vec"] = wassoc_given_vec
+        self.debugData["wassoc_local_vec"] = [-1] + wassoc_local_vec
+        self.debugData["wassoc_given_vec"] = [-1] + wassoc_given_vec
         # sense count
         SENSE_PATH = join(CURDIR, "etc/cwn/cwn_sense_count.txt")
         sense_data = SenseData(SENSE_PATH)
         nsense_vec = [sense_data.get(tok.text) for tok in cont_toks]
+
+        # nsense_vec only include content tokens, but for alignment 
+        # in debug data, other tokens are filled with -1 in 
+        # nsense_vec_dbg
+        nsense_vec_dbg = []
+        for tok in real_tokens:
+            is_cont = tok.pos in CONT_POS_LIST
+            if is_cont:
+                tok_sense = sense_data.get(tok.text)
+            else:
+                tok_sense = -1
+            nsense_vec_dbg.append(tok_sense)
+        self.debugData["nsense_vec"] = nsense_vec_dbg
+
         self.setQuantileFeatures("nSense", nsense_vec)
+        
 
     def setQuantileFeatures(self, field, rv):
         try:
