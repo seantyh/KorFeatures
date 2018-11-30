@@ -3,6 +3,7 @@ KorFeatures/__init__.py
 KorFeatures/dep_relation.py
 KorFeatures/dep_tree_structure.py
 KorFeatures/doc_feat.py
+KorFeatures/feature_distr.py
 KorFeatures/feature_template.py
 KorFeatures/frequency_data.py
 KorFeatures/kor_features.py

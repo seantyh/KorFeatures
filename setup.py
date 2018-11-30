@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(name='KorFeatures',
       version='0.1',
@@ -7,7 +7,7 @@ setup(name='KorFeatures',
       author='Sean Tseng',
       author_email='seantyh@gmail.com',
       license='MIT',
-      packages=['KorFeatures'],
+      packages=find_packages(),
       install_requires=['numpy'],
       zip_safe=False)
 
